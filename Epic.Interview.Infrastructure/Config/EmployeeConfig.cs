@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" CandidateConfig.cs" company="MCode Software">
+// <copyright file=" EmployeeConfig.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence.Config
+namespace Epic.Interview.Infrastructure.Config
 {
     using Epic.Interview.Core.Domain.Entities;
 
@@ -24,21 +24,19 @@ namespace Epic.Interview.Infrastructure.Persistence.Config
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Class CandidateConfig.
+    /// Class EmployeeConfig.
     /// </summary>
-    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Candidate}" />
-    public class CandidateConfig : IEntityTypeConfiguration<Candidate>
+    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Employee}" />
+    public class EmployeeConfig : IEntityTypeConfiguration<Employee>
     {
         /// <summary>
         /// Configures the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public void Configure(EntityTypeBuilder<Candidate> entity)
+        public void Configure(EntityTypeBuilder<Employee> entity)
         {
             entity.HasKey(p => p.Id);
-            entity.OwnsOne(p => p.Phone, phone => { phone.Property(p => p.Number).HasColumnName("phone"); });
-            entity.HasMany(c => c.Reviews).WithOne();
-            entity.Property(p => p.Name).HasMaxLength(200).IsRequired();
+            entity.Property(p => p.Name);
         }
     }
 }

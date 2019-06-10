@@ -18,11 +18,11 @@
 
 namespace Epic.Interview.Services
 {
-    using Epic.Common.Domain;
+    using Epic.Data.Infrastructure;
+    using Epic.Identity.Application.Handlers;
+    using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
-    using Epic.Interview.Core.Repository;
     using Epic.Interview.Infrastructure;
-    using Epic.Interview.Infrastructure.Persistence;
     using Epic.Interview.Services.Filters;
     using Epic.Interview.Services.Middleware;
 
@@ -67,6 +67,7 @@ namespace Epic.Interview.Services
         {
             app.UseHttpsRedirection();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<UnitOfWorkMiddleware>();
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
@@ -78,13 +79,11 @@ namespace Epic.Interview.Services
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICandidateRepository, CandidateRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IReviewRepository, ReviewRepository>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IEntitySet, EntitySet>();
             services.AddScoped<DbContext, AppContext>();
-            services.AddMediatR(typeof(AddReviewHandler).Assembly);
+            services.AddCommon();
+            services.AddInterview();
+            services.AddUser();
+            services.AddMediatR(typeof(AddReviewHandler).Assembly, typeof(CreateUserHandler).Assembly);
             services.AddMvc(options => { options.Filters.Add(new ReactiveFilter()); })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Epic Interview", Version = "v1" }); });

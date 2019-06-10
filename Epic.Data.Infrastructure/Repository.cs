@@ -16,7 +16,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence
+namespace Epic.Data.Infrastructure
 {
     using System.Linq;
 
@@ -53,59 +53,41 @@ namespace Epic.Interview.Infrastructure.Persistence
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>The mono of type T</returns>
-        public IMono<T> Delete(TK key)
-        {
-            return this.Find(key).Map(v => this.set.Entity<T>().Remove(v).Entity);
-        }
+        public IMono<T> Delete(TK key) => this.Find(key).Map(v => this.set.Entity<T>().Remove(v).Entity);
 
         /// <summary>
         /// Find this instance.
         /// </summary>
         /// <returns>The flux of type T.</returns>
-        public IFlux<T> Find()
-        {
-            return Flux.From<T>(this.set.Entity<T>());
-        }
+        public IFlux<T> Find() => Flux.From<T>(this.set.Entity<T>());
 
         /// <summary>
         /// Finds the specified specification.
         /// </summary>
         /// <param name="specification">The specification.</param>
-        /// <returns>IFlux&lt;T&gt;.</returns>
-        public IFlux<T> Find(Specification<T> specification)
-        {
-            return Flux.From<T>(this.set.Entity<T>().Where(specification.Spec));
-        }
+        /// <returns>The flux of entities.</returns>
+        public IFlux<T> Find(Specification<T> specification) => Flux.From<T>(this.set.Entity<T>().Where(specification.Spec));
 
         /// <summary>
         /// Finds the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
-        public IMono<T> Find(TK key)
-        {
-            return Mono.Just(this.set.Entity<T>().Find(key));
-        }
+        /// <returns>The entity.</returns>
+        public IMono<T> Find(TK key) => Mono.Just(this.set.Entity<T>().Find(key));
 
         /// <summary>
         /// Saves the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
-        public IMono<T> Save(IMono<T> value)
-        {
-            return value.Map(v => this.set.Entity<T>().Add(v).Entity);
-        }
+        /// <returns>the result.</returns>
+        public IMono<T> Save(IMono<T> value) => value.Map(v => this.set.Entity<T>().Add(v).Entity);
 
         /// <summary>
         /// Updates the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
-        public IMono<T> Update(TK key, IMono<T> value)
-        {
-            return value.Map(c => this.set.Entity<T>().Update(c).Entity);
-        }
+        /// <returns>the result.</returns>
+        public IMono<T> Update(TK key, IMono<T> value) => value.Map(c => this.set.Entity<T>().Update(c).Entity);
     }
 }

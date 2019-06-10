@@ -16,10 +16,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence
+namespace Epic.Interview.Services
 {
+    using Epic.Identity.Infrastructure;
     using Epic.Interview.Core.Domain.Entities;
-    using Epic.Interview.Infrastructure.Persistence.Config;
+    using Epic.Interview.Infrastructure;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -68,9 +69,8 @@ namespace Epic.Interview.Infrastructure.Persistence
         /// then this method will not be run.</remarks>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CandidateConfig());
-            modelBuilder.ApplyConfiguration(new EmployeeConfig());
-            modelBuilder.ApplyConfiguration(new ReviewConfig());
+            modelBuilder.AddInterview();
+            modelBuilder.AddUser();
         }
     }
 }

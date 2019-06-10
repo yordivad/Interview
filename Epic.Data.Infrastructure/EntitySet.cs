@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmployeeConfig.cs" company="MCode Software">
+// <copyright file=" EntitySet.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,27 +16,39 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence.Config
+namespace Epic.Data.Infrastructure
 {
-    using Epic.Interview.Core.Domain.Entities;
-
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Class EmployeeConfig.
+    /// Class EntitySet.
     /// </summary>
-    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Employee}" />
-    public class EmployeeConfig : IEntityTypeConfiguration<Employee>
+    /// <seealso cref="IEntitySet" />
+    public class EntitySet : IEntitySet
     {
         /// <summary>
-        /// Configures the specified entity.
+        /// The context.
         /// </summary>
-        /// <param name="entity">The entity.</param>
-        public void Configure(EntityTypeBuilder<Employee> entity)
+        private readonly DbContext context;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EntitySet"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        public EntitySet(DbContext context)
         {
-            entity.HasKey(p => p.Id);
-            entity.Property(p => p.Name);
+            this.context = context;
+        }
+
+        /// <summary>
+        /// Entities this instance.
+        /// </summary>
+        /// <typeparam name="T">the type of the entity</typeparam>
+        /// <returns>The entity</returns>
+        public DbSet<T> Entity<T>()
+            where T : class
+        {
+            return this.context.Set<T>();
         }
     }
 }

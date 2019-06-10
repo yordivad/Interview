@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" IEntitySet.cs" company="MCode Software">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file=" IUserRepository.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,21 +16,21 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence
+namespace Epic.Identity.Core.Repository
 {
-    using Microsoft.EntityFrameworkCore;
+    using Epic.Common.Domain;
+    using Epic.Identity.Core.Domain;
 
     /// <summary>
-    /// Interface IEntitySet
+    /// Interface IUserRepository
+    /// Implements the <see>
+    ///     <cref>Common.Domain.IRepository{long, User}</cref>
+    /// </see>.
     /// </summary>
-    public interface IEntitySet
+    /// <seealso>
+    ///     <cref>Common.Domain.IRepository{long, User}</cref>
+    /// </seealso>
+    public interface IUserRepository : IRepository<long, User>
     {
-        /// <summary>
-        /// Entities this instance.
-        /// </summary>
-        /// <typeparam name="T">The type of the entity.</typeparam>
-        /// <returns>The set of the entity.</returns>
-        DbSet<T> Entity<T>()
-            where T : class;
     }
 }

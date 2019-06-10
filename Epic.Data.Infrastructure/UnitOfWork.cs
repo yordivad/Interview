@@ -16,7 +16,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence
+namespace Epic.Data.Infrastructure
 {
     using System;
 
@@ -31,12 +31,12 @@ namespace Epic.Interview.Infrastructure.Persistence
     public class UnitOfWork : IUnitOfWork
     {
         /// <summary>
-        /// The context
+        /// The context.
         /// </summary>
         private readonly DbContext context;
 
         /// <summary>
-        /// The disposed
+        /// The disposed.
         /// </summary>
         private bool disposed;
 

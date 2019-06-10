@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Epic.Data.Infrastructure\Epic.Data.Infrastructure.csproj" />
       <ProjectReference Include="..\Epic.Interview.Core\Epic.Interview.Core.csproj" />
     </ItemGroup>
 

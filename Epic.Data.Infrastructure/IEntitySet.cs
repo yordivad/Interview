@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EntitySet.cs" company="MCode Software">
+// <copyright file=" IEntitySet.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,39 +16,21 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence
+namespace Epic.Data.Infrastructure
 {
     using Microsoft.EntityFrameworkCore;
 
     /// <summary>
-    /// Class EntitySet.
+    /// Interface IEntitySet.
     /// </summary>
-    /// <seealso cref="IEntitySet" />
-    public class EntitySet : IEntitySet
+    public interface IEntitySet
     {
-        /// <summary>
-        /// The context
-        /// </summary>
-        private readonly DbContext context;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EntitySet"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        public EntitySet(DbContext context)
-        {
-            this.context = context;
-        }
-
         /// <summary>
         /// Entities this instance.
         /// </summary>
-        /// <typeparam name="T">the type of the entity</typeparam>
-        /// <returns>The entity</returns>
-        public DbSet<T> Entity<T>()
-            where T : class
-        {
-            return this.context.Set<T>();
-        }
+        /// <typeparam name="T">The type of the entity.</typeparam>
+        /// <returns>The set of the entity.</returns>
+        DbSet<T> Entity<T>()
+            where T : class;
     }
 }

@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmployeeRepository.cs" company="MCode Software">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file=" UserRepository.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,24 +16,24 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure
+namespace Epic.Identity.Infrastructure
 {
     using Epic.Data.Infrastructure;
-    using Epic.Interview.Core.Domain.Entities;
-    using Epic.Interview.Core.Repository;
+    using Epic.Identity.Core.Domain;
+    using Epic.Identity.Core.Repository;
 
     /// <summary>
-    /// Class EmployeeRepository.
+    /// Class UserRepository.
     /// </summary>
-    /// <seealso cref="Persistence.Repository{int, Employee}" />
-    /// <seealso cref="IEmployeeRepository" />
-    public class EmployeeRepository : Repository<int, Employee>, IEmployeeRepository
+    /// <seealso cref="Epic.Data.Infrastructure.Repository{System.Int64, Epic.Identity.Core.Domain.User}" />
+    /// <seealso cref="Epic.Identity.Core.Repository.IUserRepository" />
+    public class UserRepository : Repository<long, User>, IUserRepository
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
+        /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="set">The set.</param>
-        public EmployeeRepository(IEntitySet set)
+        public UserRepository(IEntitySet set)
             : base(set)
         {
         }

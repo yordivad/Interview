@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmployeeRepository.cs" company="MCode Software">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file=" UserConfig.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,26 +16,27 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure
+namespace Epic.Identity.Infrastructure.Config
 {
-    using Epic.Data.Infrastructure;
-    using Epic.Interview.Core.Domain.Entities;
-    using Epic.Interview.Core.Repository;
+    using Epic.Identity.Core.Domain;
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Class EmployeeRepository.
+    /// Class UserConfig.
     /// </summary>
-    /// <seealso cref="Persistence.Repository{int, Employee}" />
-    /// <seealso cref="IEmployeeRepository" />
-    public class EmployeeRepository : Repository<int, Employee>, IEmployeeRepository
+    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Epic.Identity.Core.Domain.User}" />
+    public class UserConfig : IEntityTypeConfiguration<User>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
+        /// Configures the entity of type <typeparamref name="TEntity" />.
         /// </summary>
-        /// <param name="set">The set.</param>
-        public EmployeeRepository(IEntitySet set)
-            : base(set)
+        /// <param name="builder">The builder to be used to configure the entity type.</param>
+        public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id).ForSqlServerUseSequenceHiLo("usersequence");
         }
     }
 }

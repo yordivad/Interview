@@ -18,9 +18,9 @@
 
 namespace Epic.Interview.Infrastructure
 {
+    using Epic.Data.Infrastructure;
     using Epic.Interview.Core.Domain.Entities;
     using Epic.Interview.Core.Repository;
-    using Epic.Interview.Infrastructure.Persistence;
 
     /// <summary>
     /// Class CandidateRepository.

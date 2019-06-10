@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmployeeRepository.cs" company="MCode Software">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file=" Setup.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,26 +16,27 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure
+namespace Epic.Data.Infrastructure
 {
-    using Epic.Data.Infrastructure;
-    using Epic.Interview.Core.Domain.Entities;
-    using Epic.Interview.Core.Repository;
+    using Epic.Common.Domain;
+
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
-    /// Class EmployeeRepository.
+    /// Class Setup.
     /// </summary>
-    /// <seealso cref="Persistence.Repository{int, Employee}" />
-    /// <seealso cref="IEmployeeRepository" />
-    public class EmployeeRepository : Repository<int, Employee>, IEmployeeRepository
+    public static class Setup
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
+        /// Adds the common.
         /// </summary>
-        /// <param name="set">The set.</param>
-        public EmployeeRepository(IEntitySet set)
-            : base(set)
+        /// <param name="services">The services.</param>
+        /// <returns>the IServiceCollection.</returns>
+        public static IServiceCollection AddCommon(this IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IEntitySet, EntitySet>();
+            return services;
         }
     }
 }

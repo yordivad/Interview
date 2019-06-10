@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" ReviewConfig.cs" company="MCode Software">
+// <copyright file=" CandidateConfig.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure.Persistence.Config
+namespace Epic.Interview.Infrastructure.Config
 {
     using Epic.Interview.Core.Domain.Entities;
 
@@ -24,22 +24,21 @@ namespace Epic.Interview.Infrastructure.Persistence.Config
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Class ReviewConfig.
+    /// Class CandidateConfig.
     /// </summary>
-    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Review}" />
-    public class ReviewConfig : IEntityTypeConfiguration<Review>
+    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Candidate}" />
+    public class CandidateConfig : IEntityTypeConfiguration<Candidate>
     {
         /// <summary>
         /// Configures the specified entity.
         /// </summary>
         /// <param name="entity">The entity.</param>
-        public void Configure(EntityTypeBuilder<Review> entity)
+        public void Configure(EntityTypeBuilder<Candidate> entity)
         {
             entity.HasKey(p => p.Id);
-            entity.HasOne(p => p.Candidate).WithMany(c => c.Reviews).HasForeignKey("CandidateId");
-            entity.HasOne(p => p.Employee).WithMany(c => c.Reviews).HasForeignKey("EmployeeId");
-            entity.Property(p => p.Date);
-            entity.Property(p => p.Feedback);
+            entity.OwnsOne(p => p.Phone, phone => { phone.Property(p => p.Number).HasColumnName("phone"); });
+            entity.HasMany(c => c.Reviews).WithOne();
+            entity.Property(p => p.Name).HasMaxLength(200).IsRequired();
         }
     }
 }

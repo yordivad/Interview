@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmployeeRepository.cs" company="MCode Software">
+// <copyright file=" ReviewConfig.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,26 +16,30 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Infrastructure
+namespace Epic.Interview.Infrastructure.Config
 {
-    using Epic.Data.Infrastructure;
     using Epic.Interview.Core.Domain.Entities;
-    using Epic.Interview.Core.Repository;
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     /// <summary>
-    /// Class EmployeeRepository.
+    /// Class ReviewConfig.
     /// </summary>
-    /// <seealso cref="Persistence.Repository{int, Employee}" />
-    /// <seealso cref="IEmployeeRepository" />
-    public class EmployeeRepository : Repository<int, Employee>, IEmployeeRepository
+    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Review}" />
+    public class ReviewConfig : IEntityTypeConfiguration<Review>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
+        /// Configures the specified entity.
         /// </summary>
-        /// <param name="set">The set.</param>
-        public EmployeeRepository(IEntitySet set)
-            : base(set)
+        /// <param name="entity">The entity.</param>
+        public void Configure(EntityTypeBuilder<Review> entity)
         {
+            entity.HasKey(p => p.Id);
+            entity.HasOne(p => p.Candidate).WithMany(c => c.Reviews).HasForeignKey("CandidateId");
+            entity.HasOne(p => p.Employee).WithMany(c => c.Reviews).HasForeignKey("EmployeeId");
+            entity.Property(p => p.Date);
+            entity.Property(p => p.Feedback);
         }
     }
 }
