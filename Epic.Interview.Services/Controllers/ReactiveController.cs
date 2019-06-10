@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserController.cs" company="MCode Software">
+// <copyright file=" ReactiveController.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -20,45 +20,24 @@ namespace Epic.Interview.Services.Controllers
 {
     using System.Threading.Tasks;
 
-    using Epic.Identity.Application.Commands;
-
-    using MediatR;
-
     using Microsoft.AspNetCore.Mvc;
 
     using Reactor.Core;
 
     /// <summary>
-    /// Class UserController.
+    /// Class ReactiveController.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ReactiveController
+    public class ReactiveController : ControllerBase
     {
         /// <summary>
-        /// The mediator.
+        /// Results the specified task.
         /// </summary>
-        private readonly IMediator mediator;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserController"/> class.
-        /// </summary>
-        /// <param name="mediator">The mediator.</param>
-        public UserController(IMediator mediator)
+        /// <typeparam name="T">The type of the response</typeparam>
+        /// <param name="task">The task.</param>
+        /// <returns>the IActionResult.</returns>
+        public IActionResult Result<T>(Task<IMono<T>> task)
         {
-            this.mediator = mediator;
-        }
-
-        /// <summary>
-        /// Creates the user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>The response.</returns>
-        [HttpPost]
-        public IActionResult CreateUser(CreateUser user)
-        {
-            return this.Result(this.mediator.Send(user));
+            return task.ContinueWith(r => r.Result.Map(m => new ObjectResult(m))).Result.Block();
         }
     }
 }

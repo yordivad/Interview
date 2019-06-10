@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserConfig.cs" company="MCode Software">
+// <copyright file=" UserValidation.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,27 +16,28 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Identity.Infrastructure.Config
+namespace Epic.Identity.Core.Validation
 {
+    using System.Data;
+
     using Epic.Identity.Core.Domain;
 
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using FluentValidation;
 
     /// <summary>
-    /// Class UserConfig.
+    /// Class UserValidation.
     /// </summary>
-    /// <seealso cref="Microsoft.EntityFrameworkCore.IEntityTypeConfiguration{Epic.Identity.Core.Domain.User}" />
-    public class UserConfig : IEntityTypeConfiguration<User>
+    /// <seealso cref="FluentValidation.AbstractValidator{Epic.Identity.Core.Domain.User}" />
+    public class UserValidation : AbstractValidator<User>
     {
         /// <summary>
-        /// Configures the entity of type <typeparamref name="TEntity" />.
+        /// Initializes a new instance of the <see cref="UserValidation"/> class.
         /// </summary>
-        /// <param name="builder">The builder to be used to configure the entity type.</param>
-        public void Configure(EntityTypeBuilder<User> builder)
+        public UserValidation()
         {
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.Id).ForSqlServerUseSequenceHiLo("usersequence");
+            this.RuleFor(c => c.Password).NotEmpty();
+            this.RuleFor(c => c.Email).NotEmpty().EmailAddress();
+
         }
     }
 }

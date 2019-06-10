@@ -34,4 +34,8 @@
       <ProjectReference Include="..\Epic.User.Infrastructure\Epic.Identity.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Filters\" />
+    </ItemGroup>
+
 </Project>

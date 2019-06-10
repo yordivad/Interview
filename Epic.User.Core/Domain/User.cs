@@ -18,7 +18,12 @@
 
 namespace Epic.Identity.Core.Domain
 {
+    using System;
+
     using Epic.Common.Domain;
+    using Epic.Identity.Core.Validation;
+
+    using Reactor.Core;
 
     /// <summary>
     /// Class Identity.
@@ -32,7 +37,7 @@ namespace Epic.Identity.Core.Domain
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
-        public User(string name, string lastName, string email, string password)
+        private User(string name, string lastName, string email, string password)
         {
             this.Name = name;
             this.LastName = lastName;
@@ -63,5 +68,29 @@ namespace Epic.Identity.Core.Domain
         /// </summary>
         /// <value>The password.</value>
         public string Password { get; protected set; }
+
+        /// <summary>
+        /// Creates the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="confirm">The confirm.</param>
+        /// <returns>the user.</returns>
+        public static IMono<User> Create(string name, string lastName, string email, string password, string confirm)
+        {
+            if (password != confirm)
+            {
+                return Mono.Error<User>(new ArgumentException(nameof(confirm)));
+            }
+
+            var user = new User(name, lastName, email, BCrypt.Net.BCrypt.EnhancedHashPassword(password));
+            var validation = new UserValidation();
+            var valid = validation.Validate(user);
+            return !valid.IsValid
+                       ? Mono.Error<User>(new ArgumentException(string.Join(", ", valid.Errors)))
+                       : Mono.Just(user);
+        }
     }
 }

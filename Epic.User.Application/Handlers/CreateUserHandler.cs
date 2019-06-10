@@ -55,17 +55,13 @@ namespace Epic.Identity.Application.Handlers
         /// <returns>the response.</returns>
         protected override IMono<Unit> Handle(CreateUser request)
         {
-            if (request.Password != request.PasswordConfirm)
-            {
-                return Mono.Error<Unit>(new ArgumentException("password"));
-            }
-
-            var user = new User(
+            var user = User.Create(
                 request.Name,
                 request.LastName,
                 request.Email,
-                BCrypt.Net.BCrypt.EnhancedHashPassword(request.Password));
-            return this.userRepository.Save(Mono.Just(user)).Map(_ => Unit.Value);
+                request.Password,
+                request.PasswordConfirm);
+            return this.userRepository.Save(user).Map(_ => Unit.Value);
         }
     }
 }

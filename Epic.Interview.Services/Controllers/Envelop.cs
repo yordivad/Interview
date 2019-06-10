@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserController.cs" company="MCode Software">
+// <copyright file=" Envelop.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -15,50 +15,29 @@
 //  Contributors: Roy Gonzalez
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace Epic.Interview.Services.Controllers
 {
-    using System.Threading.Tasks;
-
-    using Epic.Identity.Application.Commands;
-
-    using MediatR;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    using Reactor.Core;
-
     /// <summary>
-    /// Class UserController.
+    /// Class Envelop.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ReactiveController
+    public class Envelop
     {
         /// <summary>
-        /// The mediator.
+        /// Gets or sets the data.
         /// </summary>
-        private readonly IMediator mediator;
+        /// <value>The data.</value>
+        public object Data { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// Gets or sets the error.
         /// </summary>
-        /// <param name="mediator">The mediator.</param>
-        public UserController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        /// <value>The error.</value>
+        public string Error { get; set; }
 
         /// <summary>
-        /// Creates the user.
+        /// Gets or sets a value indicating whether this <see cref="Envelop"/> is success.
         /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>The response.</returns>
-        [HttpPost]
-        public IActionResult CreateUser(CreateUser user)
-        {
-            return this.Result(this.mediator.Send(user));
-        }
+        /// <value><c>true</c> if success; otherwise, <c>false</c>.</value>
+        public bool Success { get; set; }
     }
 }

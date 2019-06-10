@@ -23,7 +23,6 @@ namespace Epic.Interview.Services
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
     using Epic.Interview.Infrastructure;
-    using Epic.Interview.Services.Filters;
     using Epic.Interview.Services.Middleware;
 
     using MediatR;
@@ -84,7 +83,7 @@ namespace Epic.Interview.Services
             services.AddInterview();
             services.AddUser();
             services.AddMediatR(typeof(AddReviewHandler).Assembly, typeof(CreateUserHandler).Assembly);
-            services.AddMvc(options => { options.Filters.Add(new ReactiveFilter()); })
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Epic Interview", Version = "v1" }); });
 
