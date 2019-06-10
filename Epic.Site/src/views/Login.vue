@@ -126,7 +126,6 @@
 
         .sign {
             padding: 20px;
-            background-color: white;
             height: 100%;
         }
 
