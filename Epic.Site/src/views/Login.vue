@@ -88,7 +88,7 @@
 
 
     .page {
-        height: 100vh;
+        height: 100%;
         background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');
         background-repeat: no-repeat;
         background-size: cover;

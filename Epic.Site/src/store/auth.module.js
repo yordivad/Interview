@@ -8,8 +8,11 @@ export default {
         status: '',
         token: localStorage.getItem('token') || '',
         user: {
-            login: "",
-            password: ""
+            name: "",
+            lastName: "",
+            email: "",
+            password: "",
+            passwordConfirm: ""
         }
     },
     mutations: {
@@ -35,7 +38,7 @@ export default {
         login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit("auth_request");
-                axios({url: process.env.API_URL + "/login", data: user, method: 'POST'})
+                axios({url: process.env.VUE_APP_API_URL + "/login", data: user, method: 'POST'})
                     .then(resp=> {
                         localStorage.setItem('token', resp.data.token);
                         axios.defaults.headers['Authorization'] = resp.data.token;
@@ -53,21 +56,20 @@ export default {
         register({commit}, user) {
             return new Promise((resolve, reject)=> {
                 commit("auth_request");
-                axios({url: process.env.API_URL + "/register", user, method: 'POST'})
+                axios({url: process.env.VUE_APP_API_URL + "/user", data: user, method: 'POST'})
                     .then(resp=> {
-                        localStorage.setItem('token', resp.data.token);
-                        axios.defaults.headers['Authorization'] = resp.data.token;
-                        commit("auth_success", resp.data.token, user);
+                        commit("success");
                         resolve(resp)
                     })
-                    .catch(err=> {
+                    .catch(err =>{
+                        commit('auth_failure');
                         reject(err)
                     })
             })
         },
         logout({commit}) {
             return new Promise(resolve => {
-              commit('logout');
+                commit('auth_logout');
                 localStorage.removeItem('token');
                 axios.defaults.headers.common['Authorization'] = "";
                resolve()

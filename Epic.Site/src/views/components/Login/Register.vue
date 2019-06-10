@@ -38,22 +38,45 @@
 </template>
 
 <script>
+
+    import {mapGetters} from 'vuex'
+    import {bus} from "../../../eventbus"
+
+    
     export default {
         name: "Register",
+        event: ["created"],
         data() {
             return {
-                name:'',
-                lastname:'',
-                email:'',
-                password:'',
-                password_confirm:''
+                name: '',
+                lastname: '',
+                email: '',
+                password: '',
+                password_confirm: ''
             }
+        },
+        computed: {
+            ...mapGetters(["status"])
         },
         methods: {
             create() {
                 this.$validator.validateAll('register').then((result) => {
                     if (result) {
-                        //console.log("ok")
+
+                        this.$store.dispatch("register", {
+                            name: this.name,
+                            lastName: this.lastname,
+                            email: this.email,
+                            password: this.password,
+                            passwordConfirm: this.password_confirm
+                        })
+                            .then(() =>{
+                                this.$emit('created')
+                                bus.$emit("ERROR", "the user was created")
+                            })
+                            .catch(err => {
+                                return bus.$emit("ERROR", err.message);
+                            })
                     }
                 })
             }

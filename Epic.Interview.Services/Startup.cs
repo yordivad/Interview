@@ -67,6 +67,14 @@ namespace Epic.Interview.Services
             app.UseHttpsRedirection();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<UnitOfWorkMiddleware>();
+            app.UseCors(
+                c =>
+                    {
+                        c.AllowAnyHeader();
+                        c.AllowAnyMethod();
+                        c.AllowAnyOrigin();
+                        c.AllowCredentials();
+                    });
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
@@ -83,6 +91,7 @@ namespace Epic.Interview.Services
             services.AddInterview();
             services.AddUser();
             services.AddMediatR(typeof(AddReviewHandler).Assembly, typeof(CreateUserHandler).Assembly);
+            services.AddCors();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Epic Interview", Version = "v1" }); });

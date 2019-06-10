@@ -35,14 +35,11 @@
                 user: "",
                 password: ""
             }
-        }
-        ,
+        },
         computed: {
             ...mapGetters(["status", "isLogin"])
-        }
-        ,
+        },
         methods: {
-
 
             login() {
                 this.$validator.validateAll('login').then((result) => {
