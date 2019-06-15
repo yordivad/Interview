@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserController.cs" company="MCode Software">
+// <copyright file=" EmailSpecification.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,50 +16,38 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Services.Controllers
+namespace Epic.Identity.Core.Specification
 {
-    using System.Threading.Tasks;
+    using System;
+    using System.Linq.Expressions;
 
-    using Epic.Identity.Application.Commands;
-
-    using MediatR;
-
-    using Microsoft.AspNetCore.Mvc;
-
-    using Reactor.Core;
+    using Epic.Common.Query;
+    using Epic.Identity.Core.Domain;
 
     /// <summary>
-    /// Class UserController.
+    /// Class EmailSpecification.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ReactiveController
+    /// <seealso cref="Epic.Common.Query.Specification{Epic.Identity.Core.Domain.User}" />
+    public class EmailSpecification : Specification<User>
     {
         /// <summary>
-        /// The mediator.
+        /// The email
         /// </summary>
-        private readonly IMediator mediator;
+        private readonly string email;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// Initializes a new instance of the <see cref="EmailSpecification"/> class.
         /// </summary>
-        /// <param name="mediator">The mediator.</param>
-        public UserController(IMediator mediator)
+        /// <param name="email">The email.</param>
+        public EmailSpecification(string email)
         {
-            this.mediator = mediator;
+            this.email = email;
         }
 
         /// <summary>
-        /// Creates the user.
+        /// Gets the spec.
         /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>The response.</returns>
-        [HttpPost]
-        public IActionResult CreateUser(CreateUser user)
-        {
-            return this.Result(this.mediator.Send(user));
-        }
-
+        /// <value>The spec.</value>
+        public override Expression<Func<User, bool>> Spec => user => user.Email == this.email;
     }
 }

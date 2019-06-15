@@ -10,19 +10,17 @@ export default {
         user: {
             name: "",
             lastName: "",
-            email: "",
-            password: "",
-            passwordConfirm: ""
+            email: ""
         }
     },
     mutations: {
         auth_request(state) {
             state.status = 'loading'
         },
-        auth_success(state, token, user) {
+        auth_success(state, data) {
             state.status = 'success';
-            state.token = token;
-            state.user = user
+            state.token = data.token;
+            state.user = data.user;
         },
         auth_failure(state) {
             state.status="fail"
@@ -38,14 +36,21 @@ export default {
         login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit("auth_request");
-                axios({url: process.env.VUE_APP_API_URL + "/login", data: user, method: 'POST'})
-                    .then(resp=> {
+                axios({url: process.env.VUE_APP_API_URL + "/auth", data: user, method: 'POST'})
+                    .then(resp => {
                         localStorage.setItem('token', resp.data.token);
                         axios.defaults.headers['Authorization'] = resp.data.token;
-                        commit("auth_success", resp.data.token, user);
+                        commit("auth_success", {
+                            token: resp.data.token,
+                            user : {
+                                name: resp.data.name,
+                                lastName: resp.data.lastName,
+                                email: resp.data.email
+                            }
+                        });
                         resolve(resp)
                     })
-                    .catch(err =>{
+                    .catch(err => {
                         commit('auth_failure');
                         localStorage.removeItem('token');
                         reject(err)
@@ -58,7 +63,7 @@ export default {
                 commit("auth_request");
                 axios({url: process.env.VUE_APP_API_URL + "/user", data: user, method: 'POST'})
                     .then(resp=> {
-                        commit("success");
+                        commit("auth_success");
                         resolve(resp)
                     })
                     .catch(err =>{

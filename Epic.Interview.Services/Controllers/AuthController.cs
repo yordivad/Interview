@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserController.cs" company="MCode Software">
+// <copyright file=" AuthController.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -18,23 +18,19 @@
 
 namespace Epic.Interview.Services.Controllers
 {
-    using System.Threading.Tasks;
-
     using Epic.Identity.Application.Commands;
 
     using MediatR;
 
     using Microsoft.AspNetCore.Mvc;
 
-    using Reactor.Core;
-
     /// <summary>
-    /// Class UserController.
+    /// Class AuthController.
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Mvc.ControllerBase" />
+    /// <seealso cref="Epic.Interview.Services.Controllers.ReactiveController" />
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ReactiveController
+    public class AuthController : ReactiveController
     {
         /// <summary>
         /// The mediator.
@@ -42,24 +38,23 @@ namespace Epic.Interview.Services.Controllers
         private readonly IMediator mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// Initializes a new instance of the <see cref="AuthController"/> class.
         /// </summary>
         /// <param name="mediator">The mediator.</param>
-        public UserController(IMediator mediator)
+        public AuthController(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
         /// <summary>
-        /// Creates the user.
+        /// Logins the specified credential.
         /// </summary>
-        /// <param name="user">The user.</param>
-        /// <returns>The response.</returns>
+        /// <param name="credential">The credential.</param>
+        /// <returns>the IActionResult.</returns>
         [HttpPost]
-        public IActionResult CreateUser(CreateUser user)
+        public IActionResult Login(Credential credential)
         {
-            return this.Result(this.mediator.Send(user));
+            return this.Result(this.mediator.Send(credential));
         }
-
     }
 }

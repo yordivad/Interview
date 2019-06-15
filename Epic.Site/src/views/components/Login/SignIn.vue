@@ -6,7 +6,7 @@
         form( class="md-layout content" data-vv-scope="login")
 
                 md-field( :class ="{'md-invalid':errors.has('login.email')}")
-                    label user
+                    label email
                     md-input(id="email" type="email" v-model="user" data-vv-name="email" v-validate="'required|email'" )
                     span(class ="md-error") {{ errors.first('login.email')}}
 
@@ -44,10 +44,10 @@
             login() {
                 this.$validator.validateAll('login').then((result) => {
                     if (result) {
-                        this.$store.dispatch("login", {user: this.user, password: this.password})
+                        this.$store.dispatch("login", {email: this.user, password: this.password})
                             .then(() => this.$router.push("/"))
                             .catch(err => {
-                                return bus.$emit("ERROR", err.message);
+                                return bus.$emit("ERROR", err.response.data.Message);
                             })
                     }
                 })

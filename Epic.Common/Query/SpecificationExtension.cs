@@ -46,5 +46,6 @@ namespace Epic.Common.Query
         {
             return new OrSpecification<T>(left, right);
         }
+
     }
 }

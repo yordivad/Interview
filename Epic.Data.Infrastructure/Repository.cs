@@ -18,6 +18,7 @@
 
 namespace Epic.Data.Infrastructure
 {
+    using System;
     using System.Linq;
 
     using Epic.Common.Domain;
@@ -56,17 +57,14 @@ namespace Epic.Data.Infrastructure
         public IMono<T> Delete(TK key) => this.Find(key).Map(v => this.set.Entity<T>().Remove(v).Entity);
 
         /// <summary>
-        /// Find this instance.
-        /// </summary>
-        /// <returns>The flux of type T.</returns>
-        public IFlux<T> Find() => Flux.From<T>(this.set.Entity<T>());
-
-        /// <summary>
         /// Finds the specified specification.
         /// </summary>
         /// <param name="specification">The specification.</param>
-        /// <returns>The flux of entities.</returns>
-        public IFlux<T> Find(Specification<T> specification) => Flux.From<T>(this.set.Entity<T>().Where(specification.Spec));
+        /// <returns>The entity.</returns>
+        public IMono<T> Find(Specification<T> specification)
+        {
+            return Mono.Just(this.set.Entity<T>().FirstOrDefault(specification.Spec));
+        }
 
         /// <summary>
         /// Finds the specified key.
@@ -74,6 +72,20 @@ namespace Epic.Data.Infrastructure
         /// <param name="key">The key.</param>
         /// <returns>The entity.</returns>
         public IMono<T> Find(TK key) => Mono.Just(this.set.Entity<T>().Find(key));
+
+        /// <summary>
+        /// Query this instance.
+        /// </summary>
+        /// <returns>The flux of type T.</returns>
+        public IFlux<T> Query() => Flux.From<T>(this.set.Entity<T>());
+
+        /// <summary>
+        /// Finds the specified specification.
+        /// </summary>
+        /// <param name="specification">The specification.</param>
+        /// <returns>The flux of entities.</returns>
+        public IFlux<T> Query(Specification<T> specification) =>
+            Flux.From<T>(this.set.Entity<T>().Where(specification.Spec));
 
         /// <summary>
         /// Saves the specified value.

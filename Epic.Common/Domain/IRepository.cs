@@ -23,7 +23,7 @@ namespace Epic.Common.Domain
     using Reactor.Core;
 
     /// <summary>
-    /// Interface IRepository
+    /// Interface IRepository.
     /// </summary>
     /// <typeparam name="TK">The type of the key</typeparam>
     /// <typeparam name="T">The type of the entity</typeparam>
@@ -38,30 +38,37 @@ namespace Epic.Common.Domain
         IMono<T> Delete(TK key);
 
         /// <summary>
-        /// Finds this instance.
-        /// </summary>
-        /// <returns>The flux of type T.</returns>
-        IFlux<T> Find();
-
-        /// <summary>
         /// Finds the specified specification.
         /// </summary>
         /// <param name="specification">The specification.</param>
-        /// <returns>IFlux&lt;T&gt;.</returns>
-        IFlux<T> Find(Specification<T> specification);
+        /// <returns>The entity.</returns>
+        IMono<T> Find(Specification<T> specification);
 
         /// <summary>
         /// Finds the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
+        /// <returns>The entity.</returns>
         IMono<T> Find(TK key);
+
+        /// <summary>
+        /// Finds this instance.
+        /// </summary>
+        /// <returns>The flux of type T.</returns>
+        IFlux<T> Query();
+
+        /// <summary>
+        /// Finds the specified specification.
+        /// </summary>
+        /// <param name="specification">The specification.</param>
+        /// <returns>The flux of entities.</returns>
+        IFlux<T> Query(Specification<T> specification);
 
         /// <summary>
         /// Saves the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
+        /// <returns>The entity.</returns>
         IMono<T> Save(IMono<T> value);
 
         /// <summary>
@@ -69,7 +76,7 @@ namespace Epic.Common.Domain
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        /// <returns>IMono&lt;T&gt;.</returns>
+        /// <returns>The entity.</returns>
         IMono<T> Update(TK key, IMono<T> value);
     }
 }

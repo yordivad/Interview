@@ -19,16 +19,39 @@
 namespace Epic.Common.Query
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq.Expressions;
+
+    /// <summary>
+    /// Class Specification.
+    /// </summary>
+    public class Specification
+    {
+        /// <summary>
+        /// Creates the specified arguments.
+        /// </summary>
+        /// <typeparam name="T">the specification.</typeparam>
+        /// <param name="args">The arguments.</param>
+        /// <returns>The specification.</returns>
+        public static T Create<T>(params object[] args)
+            where T : class
+        {
+            return Activator.CreateInstance(typeof(T), args) as T;
+        }
+    }
 
     /// <summary>
     /// The specification class to create queries
     /// </summary>
     /// <typeparam name="T">the type of the entity</typeparam>
+    [SuppressMessage(
+        "StyleCop.CSharp.MaintainabilityRules",
+        "SA1402:FileMayOnlyContainASingleClass",
+        Justification = "Reviewed. Suppression is OK here.")]
     public abstract class Specification<T>
     {
         /// <summary>
-        /// The predicate
+        /// The predicate.
         /// </summary>
         private readonly Memoization<Func<T, bool>> predicate;
 

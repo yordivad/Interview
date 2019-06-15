@@ -16,7 +16,7 @@ let router = new Router({
             name: 'home',
             component: Home,
             meta: {
-                auth: false
+                auth: true
             }
         },
         {

@@ -18,11 +18,13 @@
 
 namespace Epic.Interview.Services
 {
+    using Epic.Common;
     using Epic.Data.Infrastructure;
     using Epic.Identity.Application.Handlers;
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
     using Epic.Interview.Infrastructure;
+    using Epic.Interview.Services.Config;
     using Epic.Interview.Services.Middleware;
 
     using MediatR;
@@ -64,6 +66,7 @@ namespace Epic.Interview.Services
         /// <param name="env">The env.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             app.UseHttpsRedirection();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseMiddleware<UnitOfWorkMiddleware>();
@@ -76,6 +79,7 @@ namespace Epic.Interview.Services
                         c.AllowCredentials();
                     });
             app.UseMvc();
+            app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
         }
@@ -86,6 +90,9 @@ namespace Epic.Interview.Services
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = this.Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            services.AddBearer(appSettingsSection);
             services.AddScoped<DbContext, AppContext>();
             services.AddCommon();
             services.AddInterview();

@@ -71,17 +71,25 @@ namespace Epic.Interview.Services.Middleware
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var response = context.Response;
+            try
+            {
+                response.ContentType = "application/json";
+                response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                await response.WriteAsync(
+                    JsonConvert.SerializeObject(
+                        new
+                            {
+                                Message = exception.Message,
+                                Description = $"There was a error {exception.HelpLink}",
+                                statusCode = HttpStatusCode.InternalServerError
+                            }));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
-            response.ContentType = "application/json";
-            response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            await response.WriteAsync(
-                JsonConvert.SerializeObject(
-                    new
-                        {
-                            Message = exception.Message,
-                            Description = $"There was a error {exception.HelpLink}",
-                            statusCode = HttpStatusCode.InternalServerError
-                        }));
         }
     }
 }
