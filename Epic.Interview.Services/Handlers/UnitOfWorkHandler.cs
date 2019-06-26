@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UnitOfWorkMiddleware.cs" company="MCode Software">
+// <copyright file=" UnitOfWorkHandler.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -16,42 +16,32 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Services.Middleware
+namespace Epic.Interview.Services.Handlers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Epic.Common.Domain;
 
-    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
-    /// Class UnitOfWorkMiddleware.
+    /// Class UnitOfWorkHandler.
     /// </summary>
-    public class UnitOfWorkMiddleware
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Filters.IAsyncResultFilter" />
+    public class UnitOfWorkHandler : IAsyncActionFilter
     {
         /// <summary>
-        /// The next
+        /// Called asynchronously before the action, after model binding is complete.
         /// </summary>
-        private readonly RequestDelegate next;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UnitOfWorkMiddleware"/> class.
-        /// </summary>
-        /// <param name="next">The next.</param>
-        public UnitOfWorkMiddleware(RequestDelegate next)
+        /// <param name="context">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext" />.</param>
+        /// <param name="next">The <see cref="T:Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate" />. Invoked to execute the next action filter or the action itself.</param>
+        /// <returns>A <see cref="T:System.Threading.Tasks.Task" /> that on completion indicates the filter has executed.</returns>
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            this.next = next;
-        }
-
-        /// <summary>
-        /// Invokes the specified context.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="uow">The unit of work.</param>
-        /// <returns>The Task.</returns>
-        public async Task Invoke(HttpContext context, IUnitOfWork uow)
-        {
-            await this.next.Invoke(context);
+            var uow = context.HttpContext.RequestServices.GetService<IUnitOfWork>();
+            await next();
             uow.Commit();
         }
     }

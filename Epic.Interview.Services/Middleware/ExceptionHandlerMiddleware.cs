@@ -81,7 +81,7 @@ namespace Epic.Interview.Services.Middleware
                             {
                                 Message = exception.Message,
                                 Description = $"There was a error {exception.HelpLink}",
-                                statusCode = HttpStatusCode.InternalServerError
+                                statusCode = HttpStatusCode.InternalServerError,
                             }));
             }
             catch (Exception e)

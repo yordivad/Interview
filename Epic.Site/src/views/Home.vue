@@ -42,7 +42,7 @@
 <style lang="scss" scoped >
     .md-drawer {
         width: 230px;
-        max-width: calc(100vw - 125px);
+        max-width: 100vw;
     }
     .md-app {
         min-height: 100%;

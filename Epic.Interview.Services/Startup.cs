@@ -18,6 +18,9 @@
 
 namespace Epic.Interview.Services
 {
+    using System.Collections.Generic;
+    using System.Reflection;
+
     using Epic.Common;
     using Epic.Data.Infrastructure;
     using Epic.Identity.Application.Handlers;
@@ -25,7 +28,9 @@ namespace Epic.Interview.Services
     using Epic.Interview.Application.Handlers;
     using Epic.Interview.Infrastructure;
     using Epic.Interview.Services.Config;
+    using Epic.Interview.Services.Handlers;
     using Epic.Interview.Services.Middleware;
+    using Epic.Interview.Services.Swagger;
 
     using MediatR;
 
@@ -38,6 +43,7 @@ namespace Epic.Interview.Services
     using Microsoft.Extensions.DependencyInjection;
 
     using Swashbuckle.AspNetCore.Swagger;
+    using Swashbuckle.AspNetCore.SwaggerUI;
 
     /// <summary>
     /// Class Startup.
@@ -66,10 +72,9 @@ namespace Epic.Interview.Services
         /// <param name="env">The env.</param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
-            app.UseMiddleware<UnitOfWorkMiddleware>();
             app.UseCors(
                 c =>
                     {
@@ -78,10 +83,16 @@ namespace Epic.Interview.Services
                         c.AllowAnyOrigin();
                         c.AllowCredentials();
                     });
+
             app.UseMvc();
             app.UseAuthentication();
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            app.UseSwaggerUI(
+                c =>
+                    {
+                        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                        c.DocExpansion(DocExpansion.List);
+                    });
         }
 
         /// <summary>
@@ -99,9 +110,31 @@ namespace Epic.Interview.Services
             services.AddUser();
             services.AddMediatR(typeof(AddReviewHandler).Assembly, typeof(CreateUserHandler).Assembly);
             services.AddCors();
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Epic Interview", Version = "v1" }); });
+            services.AddMvc(
+                config =>
+                    {
+                        config.Filters.Add<UnitOfWorkHandler>();
+                        config.Filters.Add<ExceptionHandler>();
+                    }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSwaggerGen(
+                c =>
+                    {
+                        c.SwaggerDoc("v1", new Info { Title = "Epic Interview", Version = "v1" });
+                        var security = new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } } };
+
+                        c.AddSecurityDefinition(
+                            "Bearer",
+                            new ApiKeyScheme
+                                {
+                                    Description =
+                                        "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                                    Name = "Authorization",
+                                    In = "header",
+                                    Type = "apiKey",
+                                });
+                        c.OperationFilter<AuthorizationHeaderFilter>();
+                        c.AddSecurityRequirement(security);
+                    });
 
             services.Configure<CookiePolicyOptions>(
                 options =>

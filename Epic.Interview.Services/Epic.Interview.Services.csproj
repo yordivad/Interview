@@ -14,6 +14,7 @@
     <ItemGroup>
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.CookiePolicy" Version="2.2.0" />
@@ -42,6 +43,10 @@
       <ProjectReference Include="..\Epic.Interview.Infrastructure\Epic.Interview.Infrastructure.csproj" />
       <ProjectReference Include="..\Epic.User.Application\Epic.Identity.Application.csproj" />
       <ProjectReference Include="..\Epic.User.Infrastructure\Epic.Identity.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" ReviewController.cs" company="MCode Software">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file=" AntiforgeryController.cs" company="MCode Software">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -18,49 +18,41 @@
 
 namespace Epic.Interview.Services.Controllers
 {
-    using System.Net;
-    using System.Threading.Tasks;
-
-    using Epic.Interview.Application.Commands;
-
-    using MediatR;
-
-    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.AspNetCore.Mvc;
 
-    using Reactor.Core;
-
     /// <summary>
-    /// Class ReviewController.
+    /// Class AntiforgeryController.
     /// </summary>
+    /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewController
+    public class AntiforgeryController : Controller
     {
         /// <summary>
-        /// The mediator
+        /// The anti forgery.
         /// </summary>
-        private readonly IMediator mediator;
+        private IAntiforgery antiforgery;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ReviewController"/> class.
+        /// Initializes a new instance of the <see cref="AntiforgeryController"/> class.
         /// </summary>
-        /// <param name="mediator">The mediator.</param>
-        public ReviewController(IMediator mediator)
+        /// <param name="antiforgery">The anti forgery.</param>
+        public AntiforgeryController(IAntiforgery antiforgery)
         {
-            this.mediator = mediator;
+            this.antiforgery = antiforgery;
         }
 
         /// <summary>
-        /// Posts the specified request.
+        /// Gets the token.
         /// </summary>
-        /// <param name="request">The request.</param>
-        /// <returns>The task of the response.</returns>
-        [HttpPost]
-        [Authorize]
-        public async Task<IMono<Unit>> Post([FromBody] ReviewRequest request)
+        /// <returns>the IActionResult.</returns>
+        [HttpGet]
+        [IgnoreAntiforgeryToken]
+        public IActionResult GetToken()
         {
-            return await this.mediator.Send(request);
+            var tokens = this.antiforgery.GetAndStoreTokens(this.HttpContext);
+            return new ObjectResult(new { token = tokens.RequestToken, tokenName = tokens.HeaderName });
         }
     }
 }

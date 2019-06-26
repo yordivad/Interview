@@ -29,7 +29,10 @@ export default {
             state.status = "";
             state.token = "";
             state.user = {}
-        }
+        },
+        register_success(state) {
+            state.status = 'success';
+        },
     },
     actions: {
 
@@ -63,7 +66,7 @@ export default {
                 commit("auth_request");
                 axios({url: process.env.VUE_APP_API_URL + "/user", data: user, method: 'POST'})
                     .then(resp=> {
-                        commit("auth_success");
+                        commit("register_success");
                         resolve(resp)
                     })
                     .catch(err =>{

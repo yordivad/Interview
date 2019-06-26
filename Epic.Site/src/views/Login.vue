@@ -24,7 +24,7 @@
                     .sing(class="large-box")
                         .md-layout(class="md-alignment-center-center")
                             .md-layout-item
-                                register(class="box")
+                                register(class="box" @created="userCreated")
 
 </template>
 
@@ -49,6 +49,9 @@
                 this.isLogin = false
             },
             login() {
+                this.isLogin = true
+            },
+            userCreated() {
                 this.isLogin = true
             }
         }
