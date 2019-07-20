@@ -4,6 +4,10 @@ import Router from 'vue-router'
 import store from './store/store'
 import Login from './views/Login'
 import Home from './views/Home'
+import Admin from './views/Admin'
+import Opening from './views/Opening'
+import Disclaimer from './views/components/Admin/Disclaimer'
+import JobPosting from './views/components/Admin/JobPosting'
 
 Vue.use(Router);
 
@@ -22,7 +26,29 @@ let router = new Router({
         {
             path: '/login',
             name: 'login',
-            component: Login
+            component: Login,
+        },
+        {
+            path: '/jobs',
+            name: 'jobs',
+            component: Opening
+        },
+        {
+            path: '/admin',
+            name: 'admin',
+            component: Admin,
+            children: [
+                {
+                    path: 'disclaimer',
+                    name: 'disclaimer',
+                    component: Disclaimer
+                },
+                {
+                    path: 'jobPosting',
+                    name: 'jobPosting',
+                    component: JobPosting 
+                }
+            ]
         },
         {
             path: '*',

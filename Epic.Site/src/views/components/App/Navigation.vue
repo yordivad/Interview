@@ -1,4 +1,5 @@
 <template lang="pug">
+
     .navigation
         md-toolbar(class="md-transparent" md-elevation="4")
             span Navigation

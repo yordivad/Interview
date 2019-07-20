@@ -2079,12 +2079,6 @@ convert-source-map@^1.1.0:
   dependencies:
     safe-buffer "~5.1.1"
 
-cookie-machine@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/cookie-machine/-/cookie-machine-0.1.1.tgz#b2daa441f439b2cb631808f24c3d56716eb93f36"
-  dependencies:
-    cookie "^0.2.3"
-
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
@@ -2092,10 +2086,6 @@ cookie-signature@1.0.6:
 cookie@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
-
-cookie@^0.2.3:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.2.4.tgz#a8c155aa7b9b2cf2c4d32ebc7b9a0aa288ccc6bd"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"

@@ -34,7 +34,6 @@
         .md-layout(class="button_line md-alignment-bottom-right")
             md-button(class="md-raised md-primary" @click="create" :disabled="errors.any()") Save
 
-
 </template>
 
 <script>
@@ -91,9 +90,7 @@
         .md-title {
             padding-top: 10px;
         }
-        .content {
-            
-        }
+        
         .button_line {
             padding-top: 10px;
             padding-bottom: 10px;

@@ -71,10 +71,6 @@
         transition: opacity 0.5s;
     }
 
-    .fade-leave {
-        /* opacity: 1; */
-    }
-
     .fade-leave-active {
         transition: opacity 0.5s;
         opacity: 0;
@@ -92,7 +88,7 @@
 
     .page {
         height: 100%;
-        background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');
+        background-image: url("../assets/19604.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center center
