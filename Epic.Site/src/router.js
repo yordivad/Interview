@@ -8,6 +8,9 @@ import Admin from './views/Admin'
 import Opening from './views/Opening'
 import Disclaimer from './views/components/Admin/Disclaimer'
 import JobPosting from './views/components/Admin/JobPosting'
+import ShowDisclaimer from './views/components/Opening/ShowDisclaimer'
+import ListJobs from './views/components/Opening/ListJobs'
+import OpeningForm from './views/components/Opening/OpeningForm'
 
 Vue.use(Router);
 
@@ -31,7 +34,25 @@ let router = new Router({
         {
             path: '/jobs',
             name: 'jobs',
-            component: Opening
+            component: Opening,
+            children: [ 
+                {
+                    path:'list',
+                    name: 'listJobs',
+                    component: ListJobs
+                },
+                {
+                    path: 'disclaimer',
+                    name: 'showDisclaimer',
+                    component: ShowDisclaimer
+                },
+                {
+                    path: 'form',
+                    name: 'jobForm',
+                    component: OpeningForm
+                }
+                
+            ]
         },
         {
             path: '/admin',

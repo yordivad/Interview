@@ -17,14 +17,14 @@
                             md-card-content
                                 | Check out our available jobs and apply! Join us today!
                             md-card-actions
-                                md-button(@click="navEvent('jobs')") Apply Now!
+                                md-button(@click="navEvent('jobs/list')") Apply Now!
                     md-card(class="md-primary")
                             md-card-header
                                 .md-title Who Are We?
                             md-card-content
                                 | Learn more about EPIC and what we have to offer
                             md-card-actions
-                                md-button(@click="linkToEpic()") About Us
+                                md-button(href="http://epicsoftwaredev.com" target="_blank") About Us
                                 
                     md-card(class="md-primary")
                             md-card-header
@@ -48,9 +48,6 @@
          methods : {
             navEvent(component) {
                 this.$router.push('/' + component);
-            },
-            linktoEpic() {
-                window.open("http://www.epicsoftwaredev.com", "_blank");
             }
         }
     }
