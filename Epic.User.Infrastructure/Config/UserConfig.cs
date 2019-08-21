@@ -35,8 +35,12 @@ namespace Epic.Identity.Infrastructure.Config
         /// <param name="builder">The builder to be used to configure the entity type.</param>
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(c => c.Id);
-            builder.Property(c => c.Id).ForSqlServerUseSequenceHiLo("usersequence");
+            builder.ToTable("user");
+            builder.Property(c => c.Id).HasColumnName("id");
+            builder.Property(c => c.Email).HasColumnName("email");
+            builder.Property(c => c.Password).HasColumnName("password");
+            builder.Property(c => c.LastName).HasColumnName("lastname");
+            builder.Property(c => c.Name).HasColumnName("name");
         }
     }
 }

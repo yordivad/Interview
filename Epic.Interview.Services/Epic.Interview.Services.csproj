@@ -30,6 +30,7 @@
         <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.4.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.4" />
         <PackageReference Include="Reactor.Core" Version="0.6.2" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
           <PrivateAssets>all</PrivateAssets>
@@ -39,14 +40,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\data\Epic.Interview.Data\Epic.Interview.Data.csproj" />
       <ProjectReference Include="..\Epic.Interview.Application\Epic.Interview.Application.csproj" />
       <ProjectReference Include="..\Epic.Interview.Infrastructure\Epic.Interview.Infrastructure.csproj" />
       <ProjectReference Include="..\Epic.User.Application\Epic.Identity.Application.csproj" />
       <ProjectReference Include="..\Epic.User.Infrastructure\Epic.Identity.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\" />
     </ItemGroup>
 
 </Project>

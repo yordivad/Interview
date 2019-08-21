@@ -36,6 +36,7 @@ namespace Epic.Identity.Infrastructure
         /// <returns>the ModelBuilder.</returns>
         public static ModelBuilder AddUser(this ModelBuilder builder)
         {
+            builder.HasDefaultSchema("public");
             builder.ApplyConfiguration(new UserConfig());
             return builder;
         }

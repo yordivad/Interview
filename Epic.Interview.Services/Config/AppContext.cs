@@ -38,7 +38,8 @@ namespace Epic.Interview.Services
             : base(options)
         {
         }
-
+        
+        
         /// <summary>
         /// Gets or sets the candidate.
         /// </summary>

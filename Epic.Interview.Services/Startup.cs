@@ -16,6 +16,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Epic.Interview.Data;
+using Microsoft.Extensions.Logging;
+
 namespace Epic.Interview.Services
 {
     using System.Collections.Generic;
@@ -51,12 +54,20 @@ namespace Epic.Interview.Services
     public class Startup
     {
         /// <summary>
+        /// The logger.
+        /// </summary>
+        private ILogger<Startup> logger;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        public Startup(IConfiguration configuration)
+        /// <param name="logger">The logger.</param>
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             this.Configuration = configuration;
+            this.logger = logger;
+            this.Configuration.AddMigration(logger);
         }
 
         /// <summary>
@@ -144,7 +155,7 @@ namespace Epic.Interview.Services
                     });
 
             services.AddDbContext<AppContext>(
-                options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+                options => options.UseNpgsql(this.Configuration.GetConnectionString("DefaultConnection")));
         }
     }
 }
