@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Install libcurl3 for GitVersion
           command: |
-            apt uptdate
+            apt update
             apt install -q -y libcurl3
       - run:
           name: Build
