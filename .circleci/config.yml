@@ -2,11 +2,51 @@ version: 2
 jobs:
   build:
     docker:
-      - image: microsoft/aspnetcore-build:2.0
+      - image: microsoft/dotnet:2.2.103-sdk-bionic
     parallelism: 4
     steps:
       - checkout
-      - run: find .
-      - run: dotnet restore
-      - run: dotnet build
-      - run: dotnet test
+      - run:
+          name: Install "Cake.tool" .NET Core
+          commnad: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet tool install -g Cake.Tool --version 0.31.0
+      - run:
+          name: Install libcurl3 for GitVersion
+          command: |
+            apt uptdate
+            apt install -q -y libcurl3
+      - run:
+          name: Build
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet cake build.cake --bootstrap
+            dotnet cake build.cake --pack
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: microsoft/dotnet:2.2.103-sdk-bionic
+    steps:
+      - checkout
+      - run:
+          name: Install "Cake.Tool" .NET Core global tool
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet tool install -g Cake.Tool --version 0.31.0
+      - run:
+          name: Install libcurl3 for GitVersion
+          command: |
+            apt-get update
+            apt-get install -qq -y libcurl3
+      - run:
+          name: Build
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet cake build.cake --bootstrap
+            dotnet cake build.cake --pack
+      - store_artifacts:
+          name: Uploading NuGet packages as artifacts
+          path: artifacts/packages
+          destination: packages
