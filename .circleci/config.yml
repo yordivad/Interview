@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Install "Cake.tool" .NET Core
-          commnad: |
+          command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet tool install -g Cake.Tool --version 0.31.0
       - run:
@@ -22,7 +22,16 @@ jobs:
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet cake build.cake --bootstrap
             dotnet cake build.cake --pack
-      - store_artifacts:
-          name: Uploading NuGet packages as artifacts
-          path: artifacts/packages
-          destination: packages
+  test:
+    docker:
+      - image: circleci/ruby:2.4.1
+      steps:
+        - checkout
+        - run: echo "A more familiar hi"
+          
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
