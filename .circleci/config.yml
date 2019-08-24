@@ -2,7 +2,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: microsoft/aspnetcore-build:2.0
+    parallelism: 4
     steps:
       - checkout
-      - run: echo "A first hello"
+      - run: find .
+      - run: dotnet restore
+      - run: dotnet build
+      - run: dotnet test
