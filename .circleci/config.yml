@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: microsoft/dotnet:2.2.103-sdk-bionic
-    parallelism: 4
     steps:
       - checkout
       - run:
@@ -33,4 +32,6 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test
+      - test:
+          requires:
+            - build
