@@ -9,7 +9,8 @@ jobs:
           name: Install "Cake.tool" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g Cake.Tool --version 0.31.0
+            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            dotnet tool install -g Cake.Tool
       - run:
           name: Install libcurl3 for GitVersion
           command: |
