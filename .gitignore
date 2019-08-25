@@ -369,3 +369,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sw?
+
+tools/
