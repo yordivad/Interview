@@ -35,7 +35,7 @@ namespace Epic.Identity.Application.Handlers
     public class CreateUserHandler : RequestHandler<CreateUser, IMono<Unit>>
     {
         /// <summary>
-        /// The user repository
+        /// The user repository.
         /// </summary>
         private readonly IUserRepository userRepository;
 

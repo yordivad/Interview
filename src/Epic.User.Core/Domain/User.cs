@@ -31,6 +31,13 @@ namespace Epic.Identity.Core.Domain
     public class User : Entity<long>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        public User()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="User" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
