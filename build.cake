@@ -45,7 +45,7 @@ Task("version").Does(() => {
         UpdateAssemblyInfo = false,
         OutputType = GitVersionOutput.Json
     };
-    var version = GitVersion(setting);
+  //  var version = GitVersion(setting);
 });
 
 Task("restore").Does(()=> { 
