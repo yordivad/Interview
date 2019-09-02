@@ -16,7 +16,7 @@ jobs:
           name: Install libcurl3 for GitVersion
           command: |
             apt update
-            apt install -q -y libcurl3
+            apt install -q -y libcurl3 openjdk-8-jre-headless
       - run:
           name: Build
           command: |
