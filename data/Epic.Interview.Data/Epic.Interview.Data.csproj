@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <PackageReference Include="Evolve" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
       <PackageReference Include="Npgsql" Version="4.0.9" />
     </ItemGroup>
