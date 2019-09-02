@@ -2,16 +2,17 @@ version: 2
 jobs:
   build:
     docker:
-      - image: microsoft/dotnet:2.2.103-sdk-bionic
+      - image: mcr.microsoft.com/dotnet/core/sdk:latest
     steps:
       - checkout
       - run:
-          name: Install "Cake.tool" .NET Core
+          name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
             dotnet tool install -g Cake.Tool
-      - run:
+            dotnet tool install -g dotnet-sonarscanner
+      - run: v
           name: Install libcurl3 for GitVersion
           command: |
             apt update

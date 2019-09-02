@@ -19,3 +19,4 @@ WORKDIR /app
 COPY --from=builder /app/src/Epic.Interview.Services/dist ./
 ENTRYPOINT ["dotnet", "Epic.Interview.Services.dll"]
 
+

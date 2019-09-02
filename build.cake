@@ -4,35 +4,57 @@
 
 #tool nuget:?package=GitVersion.CommandLine
 
+
 var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "Epic.Interview.sln");
+var sonarkey = Argument("sonarkey", "5a9ebeed2b5d54f9f846cfc3d8f998410c88c789");
 
-task("test").Does(()=> {
-    var setting = new DotNetCoreTestSetting({
-        ArgumentCustomization = args => 
-            args.Append("/p:CollectCoverage=true")
-                .Append("/p:CoverletOutput=coverage")
-                .Append("/p:CoverletOutputFormat=opencover")
-    });
 
+Task("analysis-begin").Does(()=> {
+    var setting = new DotNetCoreToolSettings {
+        ArgumentCustomization = 
+            args => args.Append("begin")
+                        .Append("/k:RoyGI_Interview")
+                        .Append("/n:Interview")
+                        .Append("/v:1.0.0.1")
+                        .Append("/d:sonar.host.url=https://sonarcloud.io")
+                        .Append("/d:sonar.login={0}",sonarkey)
+                        .Append("/o:roygi")
+    };
+    
+    DotNetCoreTool("sonarscanner", setting);
+});
+
+Task("analysis-end").Does(()=> {
+   var setting = new DotNetCoreToolSettings {
+        ArgumentCustomization = 
+           args => args.Append("end")
+                       .Append("/d:sonar.login={0}",sonarkey)
+    };
+    
+    DotNetCoreTool("sonarscanner", setting);
+});
+
+Task("test").Does(() => {
+    var setting = new DotNetCoreTestSettings();
     DotNetCoreTest(solution, setting);    
 });
 
-task("version").Does(() => {
-    var setting = new GitVersionSetting {};
-    var version = GitVersion(setting);
+Task("version").Does(() => {
+    var setting = new GitVersionSettings {};
+  //  var version = GitVersion(setting);
 });
 
-task("restore").Does(()=> { 
+Task("restore").Does(()=> { 
     DotNetCoreRestore(solution); 
 });
 
-task("quality").Does(()=> {
+Task("quality").Does(()=> {
 
 });
 
-task("clean").Does(() =>{
+Task("clean").Does(() =>{
     CleanDirectories(string.Format("./**/obj/{0}", configuration));
     CleanDirectories(string.Format("./**/bin/{0}", configuration));
     DotNetCoreClean(solution);
@@ -40,7 +62,7 @@ task("clean").Does(() =>{
 
 Task("build").Does(()=> {
     var setting = new DotNetCoreBuildSettings {
-        configuration = configuration,
+        Configuration = configuration,
         NoRestore = false
     };
     
@@ -57,8 +79,9 @@ Task("default")
     .IsDependentOn("clean")
     .IsDependentOn("restore")
     .IsDependentOn("version")
+    .IsDependentOn("analysis-begin")
     .IsDependentOn("build")
     .IsDependentOn("test")
-    .IsDependentOn("docker");
+    .IsDependentOn("analysis-end");
     
 RunTarget(target);

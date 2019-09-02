@@ -371,3 +371,5 @@ yarn-error.log*
 *.sw?
 
 tools/
+
+.sonarqube/
