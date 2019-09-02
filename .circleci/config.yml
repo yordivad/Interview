@@ -12,7 +12,7 @@ jobs:
             export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
             dotnet tool install -g Cake.Tool
             dotnet tool install -g dotnet-sonarscanner
-      - run: v
+      - run:
           name: Install libcurl3 for GitVersion
           command: |
             apt update
