@@ -1,6 +1,6 @@
 #module nuget:?package=Cake.DotNetTool.Module
 #addin nuget:?package=Cake.Docker
-#tool nuget:?package=GitVersion.CommandLine
+
 
 
 var target = Argument("target", "default");
@@ -41,11 +41,10 @@ Task("test").Does(() => {
 
 Task("version").Does(() => {
     var setting = new GitVersionSettings {
-        NoFetch = true,
-        UpdateAssemblyInfo = false,
-        OutputType = GitVersionOutput.Json
+        UpdateAssemblyInfo = false
     };
-  //  var version = GitVersion(setting);
+    var version = GitVersion(setting);
+    Information(version);
 });
 
 Task("restore").Does(()=> { 
@@ -55,13 +54,12 @@ Task("restore").Does(()=> {
 Task("clean").Does(() =>{
     CleanDirectories(string.Format("./**/obj/{0}", configuration));
     CleanDirectories(string.Format("./**/bin/{0}", configuration));
-    DotNetCoreClean(solution);
 });
 
 Task("build").Does(()=> {
     var setting = new DotNetCoreBuildSettings {
         Configuration = configuration,
-        NoRestore = false
+        NoRestore = true
     };
     
     DotNetCoreBuild(solution, setting);
