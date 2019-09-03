@@ -1,5 +1,6 @@
 
-FROM  mcr.microsoft.com/dotnet/core/sdk:2.2-bionic
+FROM mcr.microsoft.com/dotnet/core/sdk:latest
+
 RUN apt update
 RUN apt install -q -y libcurl3 openjdk-8-jre-headless
 RUN dotnet tool install -g Cake.Tool
@@ -11,6 +12,7 @@ ENV PATH="${PATH}:/root/.dotnet/tools"
 WORKDIR /app
 COPY ./ .
 
+RUN dotnet nuget locals --clear all
 RUN dotnet cake build.cake
 
 

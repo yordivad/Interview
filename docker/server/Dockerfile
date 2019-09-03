@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-bionic AS builder
+FROM mcr.microsoft.com/dotnet/core/sdk:latest AS builder
 WORKDIR /app
 
 COPY *.sln .

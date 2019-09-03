@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2-bionic
+      - image: mcr.microsoft.com/dotnet/core/sdk:latest
     steps:
       - checkout
       - run:
@@ -21,8 +21,7 @@ jobs:
           name: Build
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake build.cake --bootstrap
-            dotnet cake build.cake --pack
+            dotnet cake build.cake
   test:
     docker:
       - image: circleci/ruby:2.4.1
