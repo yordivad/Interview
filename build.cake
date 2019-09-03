@@ -41,11 +41,16 @@ Task("test").Does(() => {
 });
 
 Task("version").Does(() => {
-    var setting = new GitVersionSettings {
-        UpdateAssemblyInfo = false
-    };
-    var version = GitVersion(setting);
-    Information(version);
+    try {
+        var setting = new GitVersionSettings {
+            UpdateAssemblyInfo = false
+        };
+        var version = GitVersion(setting);
+        Information(version);
+    }
+    catch(Exception e) {
+        Information(e);
+    }
 });
 
 Task("restore").Does(()=> { 
