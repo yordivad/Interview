@@ -10,13 +10,9 @@ jobs:
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
             dotnet tool install -g dotnet-sonarscanner
-      - run:
-          name: Install libcurl3 for GitVersion
-          command: |
-            apt update
-            apt install -q -y libcurl3 openjdk-8-jre-headless
       - run:
           name: Build
           command: |

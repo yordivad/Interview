@@ -8,6 +8,7 @@ var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "Epic.Interview.sln");
 var sonarkey = Argument("sonarkey", "5a9ebeed2b5d54f9f846cfc3d8f998410c88c789");
+var version = "0.0.0";
 
 
 Task("analysis-begin").Does(()=> {
@@ -16,7 +17,7 @@ Task("analysis-begin").Does(()=> {
             args => args.Append("begin")
                         .Append("/k:RoyGI_Interview")
                         .Append("/n:Interview")
-                        .Append("/v:1.0.0.1")
+                        .Append("/v:{0}",version )
                         .Append("/d:sonar.host.url=https://sonarcloud.io")
                         .Append("/d:sonar.login={0}",sonarkey)
                         .Append("/o:roygi")
@@ -41,16 +42,19 @@ Task("test").Does(() => {
 });
 
 Task("version").Does(() => {
+    
     try {
-        var setting = new GitVersionSettings {
-            UpdateAssemblyInfo = false
-        };
-        var version = GitVersion(setting);
-        Information(version);
+        using(var process = StartAndReturnProcess("nbgv",  
+            new ProcessSettings{ Arguments = "get-version -v NuGetPackageVersion", RedirectStandardOutput = true }))
+        {
+           version = process.GetStandardOutput().First();
+        }
     }
     catch(Exception e) {
-        Information(e);
+        Information("version error {0}", e.Message);
     }
+  
+    Information(version);
 });
 
 Task("restore").Does(()=> { 

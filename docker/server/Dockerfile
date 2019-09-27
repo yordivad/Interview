@@ -8,7 +8,7 @@ COPY  test ./test/
 COPY  data ./data/
 
 # Restoring the packages
-RUN dotnet restore 
+RUN dotnet restore
 
 # Building 
 WORKDIR /app/src/Epic.Interview.Services

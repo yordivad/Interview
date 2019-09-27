@@ -1,22 +1,22 @@
 version: '3'
 services:
+
   dev:
     build:
       context: ./
       dockerfile: ./docker/server/Dockerfile
     ports:
-      - '8080:8080'
+      - 5000:5000
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5000
     networks:
       - net
+  
   web:
     build:
       context: ./
       dockerfile: ./docker/web/Dockerfile
-    links:
-      - dev
     depends_on:
       - dev
     ports:
@@ -36,13 +36,18 @@ services:
     networks:
       - net
         
-  adminer:
-    image: adminer
-    restart: always
+  pgadmin:
+    image: dpage/pgadmin4
     ports:
-      - 8080:8080
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@mcode.net"
+      PGADMIN_DEFAULT_PASSWORD: "123"
+    depends_on:
+      - db
     networks:
       - net
+
 networks:
   net:
     driver: bridge
