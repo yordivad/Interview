@@ -373,3 +373,5 @@ yarn-error.log*
 tools/
 
 .sonarqube/
+
+web/Epic.Site/dist/

@@ -8,7 +8,7 @@ services:
       - '8080:8080'
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - 'ASPNETCORE_URLS=http://+:8080'
+      - ASPNETCORE_URLS=http://+:8080
     networks:
       - net
   web:
@@ -20,7 +20,27 @@ services:
     depends_on:
       - dev
     ports:
-      - '80:80'
+      - 80:80
+    networks:
+      - net
+        
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: epicdata
+      POSTGRES_USER: postgres
+    networks:
+      - net
+        
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
     networks:
       - net
 networks:

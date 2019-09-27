@@ -1,5 +1,5 @@
 
-FROM mcr.microsoft.com/dotnet/core/sdk:latest
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
 
 RUN apt update
 RUN apt install -q -y libcurl3 openjdk-8-jre-headless

@@ -1,10 +1,14 @@
 FROM node:lts-alpine as webbuilder
 ARG configuration=production 
-RUN npm install -g @vue/cli
+
 RUN mkdir   /app
+
 WORKDIR     /app
 COPY        ./web/Epic.Site .
+
+RUN npm install -g @vue/cli
 RUN npm install
+RUN npm rebuild node-sass
 RUN npm run build --output-path=./dist
 
 
