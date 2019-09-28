@@ -87,12 +87,8 @@ workflows:
   delivery:
     jobs:
       - build
-      - test:
-          requires:
-            - build
-      - quality:
-          requires:
-            - test
+      - test
+      - quality
       - deploy:
           requires:
             - quality
