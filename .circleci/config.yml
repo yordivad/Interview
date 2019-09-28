@@ -9,7 +9,6 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
             dotnet tool install -g Cake.Tool
       - run:
           name: Build
@@ -26,7 +25,6 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
             dotnet tool install -g Cake.Tool
       - run:
           name: Test
@@ -43,7 +41,8 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            apt update
+            apt -y install default-jdk
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
             dotnet tool install -g dotnet-sonarscanner
@@ -62,7 +61,7 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            sudo apt-get update
+            apt-get update
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
             apt install awscli 
@@ -80,7 +79,7 @@ jobs:
           name: Build
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet ccake --target=deploy            
+            dotnet cake --target=deploy            
             
 workflows:
   version: 2
@@ -91,4 +90,6 @@ workflows:
       - quality
       - deploy:
           requires:
+            - build
+            - test
             - quality
