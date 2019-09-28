@@ -1,7 +1,5 @@
 #module nuget:?package=Cake.DotNetTool.Module
 #addin nuget:?package=Cake.Docker
-#tool nuget:?package=GitVersion.CommandLine
-
 
 
 var target = Argument("target", "default");
