@@ -48,10 +48,10 @@ jobs:
             dotnet tool install -g Cake.Tool
             dotnet tool install -g dotnet-sonarscanner
       - run:
-          name: Test
+          name: Quality
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=test
+            dotnet cake --target=quality
   
   deploy:
     docker:
@@ -62,7 +62,7 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            sudo apt-get update
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
             apt install awscli 
