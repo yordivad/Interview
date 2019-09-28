@@ -141,7 +141,7 @@ Task("compile")
         .IsDependentOn("restore")
         .IsDependentOn("build");
         
-Task("test")
+Task("testing")
         .IsDependentOn("clean")
         .IsDependentOn("restore")
         .IsDependentOn("build")

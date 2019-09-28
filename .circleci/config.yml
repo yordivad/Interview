@@ -32,7 +32,7 @@ jobs:
           name: Test
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=test
+            dotnet cake --target=testing
 
   quality:
     docker:
