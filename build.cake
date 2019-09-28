@@ -138,7 +138,7 @@ Task("default")
     .IsDependentOn("docker");
  
 
-Task("build")
+Task("compile")
         .IsDependentOn("clean")
         .IsDependentOn("restore")
         .IsDependentOn("build");

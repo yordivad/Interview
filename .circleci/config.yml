@@ -15,7 +15,7 @@ jobs:
           name: Build
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=build
+            dotnet cake --target=compile
   
   test:
     docker:
