@@ -7,8 +7,11 @@
 var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "Epic.Interview.sln");
-var sonarkey = Argument("sonarkey", "5a9ebeed2b5d54f9f846cfc3d8f998410c88c789");
-var version = "0.0.0";
+var artifacts = Argument("artifacts", "./artifacts");
+var sonarkey = EnvironmentVariable("SONARKEY") ?? "";
+var nugetkey = EnvironmentVariable("NUGETKEY") ?? "";
+var amazonER = EnvironmentVariable("AMAZONKEY") ??  "";
+var version = "0.0.1";
 
 
 Task("analysis-begin").Does(()=> {
@@ -57,11 +60,39 @@ Task("version").Does(() => {
     Information(version);
 });
 
+Task("package").Does(() => {
+      var settings = new DotNetCorePackSettings
+         {
+            ArgumentCustomization = 
+                    args => args.Append($"/p:Version={version}")
+                                .Append($"/p:IncludeSymbols=true")
+                                .Append("/p:SymbolPackageFormat=snupkg"),
+            Configuration = configuration,
+            OutputDirectory = artifacts
+         };
+
+        DotNetCorePack(solution, settings);
+});
+
+
+Task("push").Does(() => {
+
+     var settings = new DotNetCoreNuGetPushSettings
+     {
+         Source = "https://api.nuget.org/v3/index.json",
+         ApiKey = nugetkey
+     };
+     
+     DotNetCoreNuGetPush( "./artifacts/*.nupkg", settings);
+});
+
+
 Task("restore").Does(()=> { 
     DotNetCoreRestore(solution); 
 });
 
 Task("clean").Does(() =>{
+    CleanDirectories("./artifacts");
     CleanDirectories(string.Format("./**/obj/{0}", configuration));
     CleanDirectories(string.Format("./**/bin/{0}", configuration));
 });
@@ -77,9 +108,25 @@ Task("build").Does(()=> {
 
 Task("docker")
     .Does(()=> {
-        var setting = new DockerImageBuildSettings{ Tag = new[] {"epic-interview:latest" }};
-        DockerBuild(setting, ".");
+        var server_setting = new DockerImageBuildSettings { 
+            Tag = new[] {$"server:latest"}, 
+            File="docker/server/Dockerfile" 
+        };
+        DockerBuild(server_setting,".");
+        DockerTag($"server:latest", $"{amazonER}/server:{version}");
+        DockerPush($"{amazonER}/server:{version}");
+ 
+        var web_setting = new DockerImageBuildSettings{  
+            Tag = new[] {$"web:latest" },
+            File="docker/web/Dockerfile"
+        };
+        DockerBuild(web_setting, ".");
+        DockerTag($"web:latest", $"{amazonER}/web:{version}");
+        DockerPush($"{amazonER}/web:{version}");
     });
+    
+    
+    
 
 Task("default")
     .IsDependentOn("clean")
@@ -88,6 +135,9 @@ Task("default")
     .IsDependentOn("analysis-begin")
     .IsDependentOn("build")
     .IsDependentOn("test")
-    .IsDependentOn("analysis-end");
+    .IsDependentOn("analysis-end")
+    .IsDependentOn("package")
+    .IsDependentOn("push")
+    .IsDependentOn("docker");
     
 RunTarget(target);

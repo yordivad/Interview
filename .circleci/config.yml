@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:latest
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
       - checkout
       - run:
@@ -17,13 +17,49 @@ jobs:
           name: Build
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake build.cake
+            dotnet cake --target=build
+  
   test:
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
-        - checkout
-        - run: echo "A more familiar hi"
+      - checkout
+      - run:
+          name: Install "tools" .NET Core
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            dotnet tool install -g Cake.Tool
+            dotnet tool install -g dotnet-sonarscanner
+      - run:
+          name: Test
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet cake --target=test
+  
+  deploy:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    steps:
+      - checkout
+      - run:
+          name: Install "tools" .NET Core
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            export CAKE_SETTINGS_SKIPPACKAGEVERSIONCHECK="true"
+            dotnet tool install -g nbgv
+            dotnet tool install -g Cake.Tool
+            apt install awscli 
+            apt install docker.io
+            systemctl start docker
+            systemctl enable docker
+            
+      - run:
+          name: Build
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet cake --target=deploy            
+            
 workflows:
   version: 2
   build_and_test:
@@ -32,3 +68,6 @@ workflows:
       - test:
           requires:
             - build
+      - deploy:
+            requires:
+              -build
