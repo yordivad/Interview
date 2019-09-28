@@ -125,9 +125,6 @@ Task("docker")
         DockerPush($"{amazonER}/web:{version}");
     });
     
-    
-    
-
 Task("default")
     .IsDependentOn("clean")
     .IsDependentOn("restore")
@@ -139,5 +136,34 @@ Task("default")
     .IsDependentOn("package")
     .IsDependentOn("push")
     .IsDependentOn("docker");
-    
+ 
+
+Task("build")
+        .IsDependentOn("clean")
+        .IsDependentOn("restore")
+        .IsDependentOn("build");
+        
+Task("test")
+        .IsDependentOn("clean")
+        .IsDependentOn("restore")
+        .IsDependentOn("build")
+        .IsDependentOn("test");
+
+Task("quality")
+        .IsDependentOn("clean")
+        .IsDependentOn("restore")
+        .IsDependentOn("version")
+        .IsDependentOn("analysis-begin")
+        .IsDependentOn("build")
+        .IsDependentOn("test")
+        .IsDependentOn("analysis-end");
+        
+Task("deploy")
+        .IsDependentOn("clean")
+        .IsDependentOn("restore")
+        .IsDependentOn("build")
+        .IsDependentOn("package")
+        .IsDependentOn("push")
+        .IsDependentOn("docker");                
+        
 RunTarget(target);
