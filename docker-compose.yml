@@ -19,12 +19,8 @@ services:
     build:
       context: ./
       dockerfile: ./docker/web/Dockerfile
-    depends_on:
-      - dev
     ports:
       - 80:80
-    environment:
-      NODE_ENV: production
     networks:
       - net
         
@@ -47,8 +43,6 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@mcode.net"
       PGADMIN_DEFAULT_PASSWORD: "123"
-    depends_on:
-      - db
     networks:
       - net
 

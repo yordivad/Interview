@@ -1,8 +1,7 @@
 version: 2.1
-
 orbs:
-  aws-ecr: circleci/aws-ecr@6.4.0
-
+  docker: circleci/docker@0.5.13
+  
 jobs:
   build:
     docker:
@@ -29,7 +28,7 @@ jobs:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g Cake.Tool
+            dotnet tool install -g Cake.Toolr
       - run:
           name: Test
           command: |
@@ -58,29 +57,54 @@ jobs:
   
   deploy:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2-bionic
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    environment:
+      DEBIAN_FRONTEND: noninteractive
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Install "tools" .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
-            
+      - run:
+          name: Install aws tools
+          command: |
+            apt update
+            apt install -y -q awscli
+            apt install -y -q python3-pip
+            pip3 install --upgrade awscli
+      - run:
+          name: Install Docker client
+          command: |
+            curl -L -o /tmp/docker-19.03.2.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.2.tgz
+            tar -xz -C /tmp -f /tmp/docker-19.03.2.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Configure aws
+          command: |
+            aws configure set region ${AWS_DEFAULT_REGION}
+            aws configure set ws_acacess_key_id ${AWS_ACCESS_KEY_ID}
+            aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+      - run: | 
+            $(aws ecr get-login --no-include-email) 
       - run:
           name: Deploy
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=deploy            
-            
+            dotnet cake --target=deploy
+
 workflows:
   version: 2
   delivery:
     jobs:
-      - build
-      - test
-      - quality
-      - aws-ecr/ecr-login
+#      - build
+#      - test
+#      - quality:
+#          requires:
+#            - build
+#            - test
       - deploy
+#          requires:
+#            - quality
