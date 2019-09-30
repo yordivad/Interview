@@ -1,0 +1,52 @@
+#Server Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-svc
+spec:
+  type: NodePort
+  selector:
+    component: dev
+  ports:
+    - port: 81
+      targetPort: 5000
+      nodePort: 30081
+
+---
+# Server Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      component: dev
+  template:
+    metadata:
+      labels:
+        component: dev
+    spec:
+      imagePullSecrets:
+        - name: aws-ecr
+      containers:
+        - name: dev-pod
+          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/server:0.0.1
+          ports:
+            - containerPort: 5000
+          livenessProbe:
+            tcpSocket:
+              port: 5000
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Docker"
+            - name: ASPNETCORE_URLS
+              value: "http://+:5000"
+            - name: ConnectionStrings__default
+              valueFrom:
+                secretKeyRef:
+                  key: connection
+                  name: dev-secret

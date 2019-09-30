@@ -67,7 +67,8 @@ namespace Epic.Interview.Services
         {
             this.Configuration = configuration;
             this.logger = logger;
-            this.Configuration.AddMigration(logger);
+            this.Configuration
+                .AddMigration(logger);
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace Epic.Interview.Services
                     });
 
             services.AddDbContext<AppContext>(
-                options => options.UseNpgsql(this.Configuration.GetConnectionString("DefaultConnection")));
+                options => options.UseNpgsql(this.Configuration.GetConnectionString("default")));
         }
     }
 }

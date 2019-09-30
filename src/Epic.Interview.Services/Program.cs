@@ -16,11 +16,14 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace Epic.Interview.Services
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
-
+    using Microsoft.Extensions.Configuration;
+    
     /// <summary>
     /// Class Program.
     /// </summary>
@@ -33,7 +36,14 @@ namespace Epic.Interview.Services
         /// <returns>The IWebHostBuilder.</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((context, config) =>
+            {
+                config.SetBasePath(Environment.CurrentDirectory);
+                config.AddJsonFile("appsettings.json", optional: false);
+                config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
+                config.AddEnvironmentVariables();
+            }).UseStartup<Startup>();
         }
 
         /// <summary>
