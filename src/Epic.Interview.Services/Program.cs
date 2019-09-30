@@ -43,6 +43,10 @@ namespace Epic.Interview.Services
                 config.AddJsonFile("appsettings.json", optional: false);
                 config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
                 config.AddEnvironmentVariables();
+                if (context.HostingEnvironment.IsDevelopment())
+                {
+                    config.AddUserSecrets<Startup>();
+                }
             }).UseStartup<Startup>();
         }
 

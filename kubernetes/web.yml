@@ -38,14 +38,9 @@ spec:
         - name: aws-ecr
       containers:
         - name: web
-          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/web:1.1.2-alpha
+          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/web:1.1.4-beta
           ports:
             - containerPort: 80
           livenessProbe:
             tcpSocket:
               port: 80
-          env:
-            - name: NODE_ENV
-              value: production
-            - name: VUE_APP_API_URL
-              value: http://server:5000/api

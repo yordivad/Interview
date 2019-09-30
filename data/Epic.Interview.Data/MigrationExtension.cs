@@ -44,7 +44,7 @@ namespace Epic.Interview.Data
                 if (path != null)
                 {
                     using (var connection =
-                        new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection")))
+                        new NpgsqlConnection(configuration.GetConnectionString("default")))
                     {
                         var evolve = new Evolve.Evolve(connection, msg => logger.LogInformation(msg))
                         {

@@ -6,10 +6,12 @@ services:
       context: ./
       dockerfile: ./docker/server/Dockerfile
     ports:
-      - 5000:5000
+      - 8080:8080
     environment:
-      - ASPNETCORE_ENVIRONMENT=Docker
-      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__default=Database=postgres;Username=postgres;Password=123;Host=db
+      - AppSettings__secret=development-secret
     networks:
       - net
   
@@ -21,6 +23,8 @@ services:
       - dev
     ports:
       - 80:80
+    environment:
+      NODE_ENV: production
     networks:
       - net
         
@@ -31,7 +35,7 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: 123
-      POSTGRES_DB: epicdata
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
     networks:
       - net
@@ -39,7 +43,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - 8080:80
+      - 9090:80
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@mcode.net"
       PGADMIN_DEFAULT_PASSWORD: "123"

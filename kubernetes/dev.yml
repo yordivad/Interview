@@ -9,9 +9,9 @@ spec:
   selector:
     component: dev
   ports:
-    - port: 81
-      targetPort: 5000
-      nodePort: 30081
+    - port: 5000
+      targetPort: 80
+      nodePort: 30082
 
 ---
 # Server Deployment
@@ -34,19 +34,24 @@ spec:
         - name: aws-ecr
       containers:
         - name: dev-pod
-          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/server:1.1.2-alpha
+          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/server:1.1.4-beta
           ports:
-            - containerPort: 5000
+            - containerPort: 80
           livenessProbe:
             tcpSocket:
-              port: 5000
+              port: 80
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Docker"
             - name: ASPNETCORE_URLS
-              value: "http://+:5000"
+              value: "http://+:80"
             - name: ConnectionStrings__default
               valueFrom:
                 secretKeyRef:
                   key: connection
+                  name: dev-secret
+            - name: AppSettings__secret
+              valueFrom:
+                secretKeyRef:
+                  key: secret
                   name: dev-secret
