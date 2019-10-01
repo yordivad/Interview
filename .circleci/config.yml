@@ -99,7 +99,7 @@ workflows:
   version: 2
   delivery:
     jobs:
-#      - build
+      - build
 #      - test
 #      - quality:
 #          requires:
