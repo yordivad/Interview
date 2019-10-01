@@ -105,35 +105,28 @@ Task("build").Does(()=> {
 });
 
 Task("docker")
-    .Does(()=> {
-        var server_setting = new DockerImageBuildSettings { 
-            Tag = new[] {$"server:latest"}, 
-            File="docker/server/Dockerfile" 
-        };
+    .Does(() => {
+        var server_setting = new DockerImageBuildSettings { Tag = new[] {$"server:latest"}, File="docker/server/Dockerfile" };
         DockerBuild(server_setting,".");
         DockerTag($"server:latest", $"{amazonER}/server:{version}");
         DockerPush($"{amazonER}/server:{version}");
- 
-        var web_setting = new DockerImageBuildSettings{  
-            Tag = new[] {$"web:latest" },
-            File="docker/web/Dockerfile"
-        };
+        var web_setting = new DockerImageBuildSettings{Tag = new[] {$"web:latest" }, File="docker/web/Dockerfile"};
         DockerBuild(web_setting, ".");
         DockerTag($"web:latest", $"{amazonER}/web:{version}");
-        DockerPush($"{amazonER}/web:{version}");
+        DockerPush($"{amazonER}/web:{version}");       
     });
     
 Task("default")
-    .IsDependentOn("clean")
-    .IsDependentOn("restore")
-    .IsDependentOn("version")
-    .IsDependentOn("analysis-begin")
-    .IsDependentOn("build")
-    .IsDependentOn("test")
-    .IsDependentOn("analysis-end")
-    .IsDependentOn("package")
-    .IsDependentOn("push")
-    .IsDependentOn("docker");
+        .IsDependentOn("clean")
+        .IsDependentOn("restore")
+        .IsDependentOn("version")
+        .IsDependentOn("analysis-begin")
+        .IsDependentOn("build")
+        .IsDependentOn("test")
+        .IsDependentOn("analysis-end")
+        .IsDependentOn("package")
+        .IsDependentOn("push")
+        .IsDependentOn("docker");
  
 
 Task("compile")
@@ -157,12 +150,15 @@ Task("quality")
         .IsDependentOn("analysis-end");
         
 Task("deploy")
+        .IsDependentOn("version")
+        .IsDependentOn("docker");
+        
+Task("nuget")
         .IsDependentOn("clean")
         .IsDependentOn("restore")
         .IsDependentOn("version")
         .IsDependentOn("build")
         .IsDependentOn("package")
-        .IsDependentOn("push")
-        .IsDependentOn("docker");                
-        
+        .IsDependentOn("push");
+     
 RunTarget(target);
