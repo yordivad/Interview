@@ -132,7 +132,8 @@ workflows:
             - test
       - deploy:
           requires:
-            - quality
+            - build
+            - test
       - nuget:
           requires:
             - deploy
