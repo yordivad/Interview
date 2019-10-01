@@ -16,27 +16,22 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Epic.Interview.Data;
-using Microsoft.Extensions.Logging;
-
 namespace Epic.Interview.Services
 {
     using System.Collections.Generic;
     using System.Reflection;
-
     using Epic.Common;
     using Epic.Data.Infrastructure;
     using Epic.Identity.Application.Handlers;
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
+    using Epic.Interview.Data;
     using Epic.Interview.Infrastructure;
     using Epic.Interview.Services.Config;
     using Epic.Interview.Services.Handlers;
     using Epic.Interview.Services.Middleware;
     using Epic.Interview.Services.Swagger;
-
     using MediatR;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -44,7 +39,7 @@ namespace Epic.Interview.Services
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
+    using Microsoft.Extensions.Logging;
     using Swashbuckle.AspNetCore.Swagger;
     using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -54,11 +49,6 @@ namespace Epic.Interview.Services
     public class Startup
     {
         /// <summary>
-        /// The logger.
-        /// </summary>
-        private ILogger<Startup> logger;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
@@ -66,7 +56,6 @@ namespace Epic.Interview.Services
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             this.Configuration = configuration;
-            this.logger = logger;
             this.Configuration
                 .AddMigration(logger);
         }
