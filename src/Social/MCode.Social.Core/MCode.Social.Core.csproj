@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Specification" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_UnmanagedRegistrationCache Remove="obj\MCode.Social.Core.csproj.UnmanagedRegistration.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ResolveComReferenceCache Remove="obj\Debug\netstandard2.0\MCode.Social.Core.csproj.ResolveComReference.cache" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <IntermediateAssembly Remove="obj\Debug\netstandard2.0\MCode.Social.Core.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DebugSymbolsIntermediatePath Remove="obj\Debug\netstandard2.0\MCode.Social.Core.pdb" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_DeploymentManifestEntryPoint Remove="obj\Debug\netstandard2.0\MCode.Social.Core.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ApplicationManifest Remove="obj\Debug\netstandard2.0\Native.MCode.Social.Core.manifest" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <DeployManifest Remove="obj\Debug\netstandard2.0\MCode.Social.Core.application" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Epic.Common\Epic.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="8.4.0" />
+    </ItemGroup>
+
+</Project>

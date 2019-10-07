@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MCode.Social.Abstraction\MCode.Social.Abstraction.csproj" />
+      <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />
+      <ProjectReference Include="..\MCode.Social.Infrastructure\MCode.Social.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="7.0.0" />
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+      <PackageReference Include="Orleankka.Runtime" Version="2.3.4" />
+    </ItemGroup>
+
+</Project>

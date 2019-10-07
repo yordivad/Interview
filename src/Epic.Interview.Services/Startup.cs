@@ -25,7 +25,6 @@ namespace Epic.Interview.Services
     using Epic.Identity.Application.Handlers;
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
-    using Epic.Interview.Data;
     using Epic.Interview.Infrastructure;
     using Epic.Interview.Services.Config;
     using Epic.Interview.Services.Handlers;
@@ -56,8 +55,6 @@ namespace Epic.Interview.Services
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             this.Configuration = configuration;
-            this.Configuration
-                .AddMigration(logger);
         }
 
         /// <summary>

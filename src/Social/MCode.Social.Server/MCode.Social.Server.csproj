@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Orleankka" Version="2.3.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MCode.Social.Abstraction\MCode.Social.Abstraction.csproj" />
+      <ProjectReference Include="..\MCode.Social.Application\MCode.Social.Application.csproj" />
+      <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />
+      <ProjectReference Include="..\MCode.Social.Infrastructure\MCode.Social.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -16,6 +16,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+
 namespace Epic.Identity.Application.Handlers
 {
     using System;
@@ -105,8 +107,14 @@ namespace Epic.Identity.Application.Handlers
                                       {
                                           Subject =
                                               new ClaimsIdentity(
-                                                  new Claim[] { new Claim(ClaimTypes.Name, user.Id.ToString()) }),
-                                          Expires = DateTime.UtcNow.AddDays(7),
+                                                  new Claim[]
+                                                  {
+                                                      new Claim(ClaimTypes.Name, user.Id.ToString()),
+                                                      new Claim( ClaimTypes.GivenName, user.Name),
+                                                      new Claim(ClaimTypes.Email, user.Email),
+                                                      new Claim(ClaimTypes.Expiration, DateTime.Now.AddDays(2).ToString(CultureInfo.InvariantCulture)),
+                                                  }),
+                                          Expires = DateTime.UtcNow.AddDays(2),
                                           SigningCredentials = new SigningCredentials(
                                               new SymmetricSecurityKey(key),
                                               SecurityAlgorithms.HmacSha256Signature),
