@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" ReviewRequest.cs" company="MCode Software">
+// <copyright file="ReviewRequest.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class ReviewRequest.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +25,9 @@ namespace Epic.Interview.Application.Commands
     /// <summary>
     /// Class ReviewRequest.
     /// </summary>
-    /// <seealso cref="MediatR.IRequest{IMono{Unit}}" />
+    /// <seealso>
+    ///     <cref>MediatR.IRequest{IMono{Unit}}</cref>
+    /// </seealso>
     public class ReviewRequest : IRequest<IMono<Unit>>
     {
         /// <summary>

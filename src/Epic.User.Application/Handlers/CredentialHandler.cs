@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" CredentialHandler.cs" company="MCode Software">
+// <copyright file="CredentialHandler.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,18 +9,17 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class CredentialHandler.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
-using System.Globalization;
 
 namespace Epic.Identity.Application.Handlers
 {
     using System;
+    using System.Globalization;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
@@ -29,7 +28,8 @@ namespace Epic.Identity.Application.Handlers
 
     using Epic.Common;
     using Epic.Common.Query;
-    using Epic.Identity.Application.Commands;
+    using Epic.Identity.Application.Commands.Request;
+    using Epic.Identity.Application.Commands.Response;
     using Epic.Identity.Core.Domain;
     using Epic.Identity.Core.Repository;
     using Epic.Identity.Core.Specification;
@@ -105,14 +105,15 @@ namespace Epic.Identity.Application.Handlers
             var key = Encoding.ASCII.GetBytes(this.settings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
                                       {
-                                          Subject =
-                                              new ClaimsIdentity(
-                                                  new Claim[]
+                                          Subject = new ClaimsIdentity(
+                                              new[]
                                                   {
                                                       new Claim(ClaimTypes.Name, user.Id.ToString()),
-                                                      new Claim( ClaimTypes.GivenName, user.Name),
+                                                      new Claim(ClaimTypes.GivenName, user.Name),
                                                       new Claim(ClaimTypes.Email, user.Email),
-                                                      new Claim(ClaimTypes.Expiration, DateTime.Now.AddDays(2).ToString(CultureInfo.InvariantCulture)),
+                                                      new Claim(
+                                                          ClaimTypes.Expiration,
+                                                          DateTime.Now.AddDays(2).ToString(CultureInfo.InvariantCulture)),
                                                   }),
                                           Expires = DateTime.UtcNow.AddDays(2),
                                           SigningCredentials = new SigningCredentials(

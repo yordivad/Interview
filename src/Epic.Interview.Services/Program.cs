@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Program.cs" company="MCode Software">
+// <copyright file="Program.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,21 +9,21 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class Program.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace Epic.Interview.Services
 {
+    using System;
+
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
-    
+
     /// <summary>
     /// Class Program.
     /// </summary>
@@ -36,18 +36,20 @@ namespace Epic.Interview.Services
         /// <returns>The IWebHostBuilder.</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((context, config) =>
-            {
-                config.SetBasePath(Environment.CurrentDirectory);
-                config.AddJsonFile("appsettings.json", optional: false);
-                config.AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json", optional: true);
-                config.AddEnvironmentVariables();
-                if (context.HostingEnvironment.IsDevelopment())
-                {
-                    config.AddUserSecrets<Startup>();
-                }
-            }).UseStartup<Startup>();
+            return WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration(
+                (context, config) =>
+                    {
+                        config.SetBasePath(Environment.CurrentDirectory);
+                        config.AddJsonFile("appsettings.json", optional: false);
+                        config.AddJsonFile(
+                            $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
+                            optional: true);
+                        config.AddEnvironmentVariables();
+                        if (context.HostingEnvironment.IsDevelopment())
+                        {
+                            config.AddUserSecrets<Startup>();
+                        }
+                    }).UseStartup<Startup>();
         }
 
         /// <summary>

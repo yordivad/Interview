@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" CreateUserHandler.cs" company="MCode Software">
+// <copyright file="CreateUserHandler.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,18 +9,16 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class CreateUserHandler.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Identity.Application.Handlers
 {
-    using System;
-
-    using Epic.Identity.Application.Commands;
+    using Epic.Identity.Application.Commands.Request;
     using Epic.Identity.Core.Domain;
     using Epic.Identity.Core.Repository;
 
@@ -31,7 +29,9 @@ namespace Epic.Identity.Application.Handlers
     /// <summary>
     /// Class CreateUserHandler.
     /// </summary>
-    /// <seealso cref="MediatR.RequestHandler{Epic.User.Application.Commands.CreateUser, Reactor.Core.IMono{MediatR.Unit}}" />
+    /// <seealso>
+    ///     <cref>MediatR.RequestHandler{Epic.User.Application.Commands.CreateUser, Reactor.Core.IMono{MediatR.Unit}}</cref>
+    /// </seealso>
     public class CreateUserHandler : RequestHandler<CreateUser, IMono<Unit>>
     {
         /// <summary>

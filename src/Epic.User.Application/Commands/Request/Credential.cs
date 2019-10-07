@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Credential.cs" company="MCode Software">
+// <copyright file="Credential.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,15 +9,17 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class Credential.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Identity.Application.Commands
+namespace Epic.Identity.Application.Commands.Request
 {
+    using Epic.Identity.Application.Commands.Response;
+
     using MediatR;
 
     using Reactor.Core;
@@ -25,7 +27,9 @@ namespace Epic.Identity.Application.Commands
     /// <summary>
     /// Class Credential.
     /// </summary>
-    /// <seealso cref="MediatR.IRequest{Reactor.Core.IMono{Epic.Identity.Application.Commands.AuthenticatedUser}}" />
+    /// <seealso>
+    ///     <cref>MediatR.IRequest{Reactor.Core.IMono{Epic.Identity.Application.Commands.AuthenticatedUser}}</cref>
+    /// </seealso>
     public class Credential : IRequest<IMono<AuthenticatedUser>>
     {
         /// <summary>

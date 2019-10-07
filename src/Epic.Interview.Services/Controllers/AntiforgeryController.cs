@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" AntiforgeryController.cs" company="MCode Software">
+// <copyright file="AntiForgeryController.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class AntiForgeryController.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -22,23 +22,23 @@ namespace Epic.Interview.Services.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
-    /// Class AntiforgeryController.
+    /// Class Anti forgery Controller.
     /// </summary>
     /// <seealso cref="Microsoft.AspNetCore.Mvc.Controller" />
     [Route("api/[controller]")]
     [ApiController]
-    public class AntiforgeryController : Controller
+    public class AntiForgeryController : Controller
     {
         /// <summary>
         /// The anti forgery.
         /// </summary>
-        private IAntiforgery antiforgery;
+        private readonly IAntiforgery antiforgery;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AntiforgeryController"/> class.
+        /// Initializes a new instance of the <see cref="AntiForgeryController"/> class.
         /// </summary>
         /// <param name="antiforgery">The anti forgery.</param>
-        public AntiforgeryController(IAntiforgery antiforgery)
+        public AntiForgeryController(IAntiforgery antiforgery)
         {
             this.antiforgery = antiforgery;
         }

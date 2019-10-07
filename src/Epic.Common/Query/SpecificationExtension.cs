@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" SpecificationExtension.cs" company="MCode Software">
+// <copyright file="SpecificationExtension.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class SpecificationExtension.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ namespace Epic.Common.Query
         /// <typeparam name="T">The type T</typeparam>
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
-        /// <returns>Specification&lt;T&gt;.</returns>
+        /// <returns>The specification.</returns>
         public static Specification<T> And<T>(this Specification<T> left, Specification<T> right)
         {
             return new AndSpecification<T>(left, right);
@@ -46,6 +46,5 @@ namespace Epic.Common.Query
         {
             return new OrSpecification<T>(left, right);
         }
-
     }
 }

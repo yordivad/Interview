@@ -4,6 +4,14 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CodeAnalysisRuleSet>Epic.Identity.Features.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CodeAnalysisRuleSet>Epic.Identity.Features.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
     
     <ItemGroup>
         <PackageReference Include="MediatR" Version="7.0.0" />

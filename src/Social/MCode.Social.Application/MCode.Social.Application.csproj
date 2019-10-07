@@ -4,6 +4,14 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CodeAnalysisRuleSet>MCode.Social.Application.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CodeAnalysisRuleSet>MCode.Social.Application.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\MCode.Social.Abstraction\MCode.Social.Abstraction.csproj" />
       <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />

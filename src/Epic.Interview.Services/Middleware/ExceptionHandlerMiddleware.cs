@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" ExceptionHandlerMiddleware.cs" company="MCode Software">
+// <copyright file="ExceptionHandlerMiddleware.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class ExceptionHandlerMiddleware.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ namespace Epic.Interview.Services.Middleware
                     JsonConvert.SerializeObject(
                         new
                             {
-                                Message = exception.Message,
+                                exception.Message,
                                 Description = $"There was a error {exception.HelpLink}",
                                 statusCode = HttpStatusCode.InternalServerError,
                             }));
@@ -89,7 +89,6 @@ namespace Epic.Interview.Services.Middleware
                 Console.WriteLine(e);
                 throw;
             }
-
         }
     }
 }

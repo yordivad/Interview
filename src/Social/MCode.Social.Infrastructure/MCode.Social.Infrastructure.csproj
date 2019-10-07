@@ -4,6 +4,14 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CodeAnalysisRuleSet>MCode.Social.Infrastructure.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CodeAnalysisRuleSet>MCode.Social.Infrastructure.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\..\Epic.Data.Infrastructure\Epic.Data.Infrastructure.csproj" />
       <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Candidate.cs" company="MCode Software">
+// <copyright file="Candidate.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class Candidate.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -28,7 +28,9 @@ namespace Epic.Interview.Core.Domain.Entities
     /// <summary>
     /// Class Candidate.
     /// </summary>
-    /// <seealso cref="Common.Domain.Entity{int}" />
+    /// <seealso>
+    ///     <cref>Common.Domain.Entity{int}</cref>
+    /// </seealso>
     public class Candidate : Entity<int>
     {
         /// <summary>
@@ -62,12 +64,6 @@ namespace Epic.Interview.Core.Domain.Entities
         /// </summary>
         /// <value>The reviews.</value>
         public ICollection<Review> Reviews { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the email.
-        /// </summary>
-        /// <value>The email.</value>
-        private Email Email { get; set; }
 
         /// <summary>
         /// Adds the review.

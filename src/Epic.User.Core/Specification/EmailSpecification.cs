@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" EmailSpecification.cs" company="MCode Software">
+// <copyright file="EmailSpecification.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class EmailSpecification.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -27,7 +27,9 @@ namespace Epic.Identity.Core.Specification
     /// <summary>
     /// Class EmailSpecification.
     /// </summary>
-    /// <seealso cref="Epic.Common.Query.Specification{Epic.Identity.Core.Domain.User}" />
+    /// <seealso>
+    ///     <cref>Epic.Common.Query.Specification{Epic.Identity.Core.Domain.User}</cref>
+    /// </seealso>
     public class EmailSpecification : Specification<User>
     {
         /// <summary>

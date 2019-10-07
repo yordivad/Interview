@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" CreateUser.cs" company="MCode Software">
+// <copyright file="CreateUser.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,14 +9,14 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class CreateUser.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Identity.Application.Commands
+namespace Epic.Identity.Application.Commands.Request
 {
     using MediatR;
 
@@ -25,7 +25,9 @@ namespace Epic.Identity.Application.Commands
     /// <summary>
     /// Class CreateUser.
     /// </summary>
-    /// <seealso cref="MediatR.IRequest{Reactor.Core.IMono{MediatR.Unit}}" />
+    /// <seealso>
+    ///     <cref>MediatR.IRequest{Reactor.Core.IMono{MediatR.Unit}}</cref>
+    /// </seealso>
     public class CreateUser : IRequest<IMono<Unit>>
     {
         /// <summary>

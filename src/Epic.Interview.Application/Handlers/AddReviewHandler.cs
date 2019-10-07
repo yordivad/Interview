@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" AddReviewHandler.cs" company="MCode Software">
+// <copyright file="AddReviewHandler.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class AddReviewHandler.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -29,7 +29,9 @@ namespace Epic.Interview.Application.Handlers
     /// <summary>
     /// Class AddReviewHandler.
     /// </summary>
-    /// <seealso cref="MediatR.RequestHandler{ReviewRequest, IMono{Unit}}" />
+    /// <seealso>
+    ///     <cref>MediatR.RequestHandler{ReviewRequest, IMono{Unit}}</cref>
+    /// </seealso>
     public class AddReviewHandler : RequestHandler<ReviewRequest, IMono<Unit>>
     {
         /// <summary>
@@ -43,24 +45,14 @@ namespace Epic.Interview.Application.Handlers
         private readonly IEmployeeRepository employeeRepository;
 
         /// <summary>
-        /// The review repository.
-        /// </summary>
-        private readonly IReviewRepository reviewRepository;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AddReviewHandler"/> class.
         /// </summary>
         /// <param name="candidateRepository">The candidate repository.</param>
         /// <param name="employeeRepository">The employee repository.</param>
-        /// <param name="reviewRepository">The review repository.</param>
-        public AddReviewHandler(
-            ICandidateRepository candidateRepository,
-            IEmployeeRepository employeeRepository,
-            IReviewRepository reviewRepository)
+        public AddReviewHandler(ICandidateRepository candidateRepository, IEmployeeRepository employeeRepository)
         {
             this.candidateRepository = candidateRepository;
             this.employeeRepository = employeeRepository;
-            this.reviewRepository = reviewRepository;
         }
 
         /// <summary>

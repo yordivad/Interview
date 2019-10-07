@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" AppContext.cs" company="MCode Software">
+// <copyright file="AppContext.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,14 +9,14 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class AppContext.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Epic.Interview.Services
+namespace Epic.Interview.Services.Config
 {
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Core.Domain.Entities;
@@ -38,8 +38,7 @@ namespace Epic.Interview.Services
             : base(options)
         {
         }
-        
-        
+
         /// <summary>
         /// Gets or sets the candidate.
         /// </summary>

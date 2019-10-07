@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Memoization.cs" company="MCode Software">
+// <copyright file="Memoization.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class Memoization.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ namespace Epic.Common.Query
     using System;
 
     /// <summary>
-    /// Class Memoization.
+    /// Class Memorization.
     /// </summary>
     /// <typeparam name="T">The type of the specification</typeparam>
     public class Memoization<T>
@@ -29,7 +29,7 @@ namespace Epic.Common.Query
         /// <summary>
         /// The has value
         /// </summary>
-        private bool hasValue = false;
+        private bool hasValue;
 
         /// <summary>
         /// The value

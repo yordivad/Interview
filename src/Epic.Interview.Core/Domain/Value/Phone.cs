@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Phone.cs" company="MCode Software">
+// <copyright file="Phone.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,10 +9,10 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class Phone.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -27,10 +27,19 @@ namespace Epic.Interview.Core.Domain.Value
     public class Phone : ValueObject<Phone>
     {
         /// <summary>
-        /// Gets or sets the number.
+        /// Initializes a new instance of the <see cref="Phone"/> class.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        public Phone(string number)
+        {
+            this.Number = number;
+        }
+
+        /// <summary>
+        /// Gets the number.
         /// </summary>
         /// <value>The number.</value>
-        public string Number { get; set; }
+        public string Number { get; }
 
         /// <summary>
         /// Returns a hash code for this instance.

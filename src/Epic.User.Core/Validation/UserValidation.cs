@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" UserValidation.cs" company="MCode Software">
+// <copyright file="UserValidation.cs" company="MCode">
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
@@ -9,17 +9,15 @@
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+//  along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
 // <summary>
-//  Contributors: Roy Gonzalez
+//   Class UserValidation.cs
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Identity.Core.Validation
 {
-    using System.Data;
-
     using Epic.Identity.Core.Domain;
 
     using FluentValidation;
@@ -27,7 +25,9 @@ namespace Epic.Identity.Core.Validation
     /// <summary>
     /// Class UserValidation.
     /// </summary>
-    /// <seealso cref="FluentValidation.AbstractValidator{Epic.Identity.Core.Domain.User}" />
+    /// <seealso>
+    ///     <cref>FluentValidation.AbstractValidator{Epic.Identity.Core.Domain.User}</cref>
+    /// </seealso>
     public class UserValidation : AbstractValidator<User>
     {
         /// <summary>
@@ -37,7 +37,6 @@ namespace Epic.Identity.Core.Validation
         {
             this.RuleFor(c => c.Password).NotEmpty();
             this.RuleFor(c => c.Email).NotEmpty().EmailAddress();
-
         }
     }
 }
