@@ -22,9 +22,12 @@
       <PackageReference Include="Reactor.Core" Version="0.6.2" />
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\stylecop.json">
+        <Link>stylecop.json</Link>
+      </Content>
+    </ItemGroup>
 
 
 </Project>
