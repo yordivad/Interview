@@ -24,9 +24,12 @@
     <ItemGroup>
       <ProjectReference Include="..\Epic.Interview.Core\Epic.Interview.Core.csproj" />
     </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
 
+
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
+    </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ WORKDIR /app
 
 
 COPY *.sln .
+COPY  stylecop.json .
 COPY  src ./src
 COPY  test ./test/
 COPY  data ./data/

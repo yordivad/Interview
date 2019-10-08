@@ -12,9 +12,11 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <CodeAnalysisRuleSet>MCode.Social.Core.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
+    </ItemGroup>
  <ItemGroup>
       <ProjectReference Include="..\..\Epic.Common\Epic.Common.csproj" />
     </ItemGroup>

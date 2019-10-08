@@ -23,8 +23,10 @@
       <PackageReference Include="Microsoft.Orleans.Core" Version="2.3.0" />
     </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
+    </ItemGroup>
 
 </Project>

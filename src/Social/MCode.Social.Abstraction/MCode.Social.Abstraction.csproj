@@ -18,9 +18,10 @@
       <PackageReference Include="Orleankka" Version="2.3.4" />
       <PackageReference Include="Reactor.Core" Version="0.6.2" />
     </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
+    </ItemGroup>
 
 </Project>

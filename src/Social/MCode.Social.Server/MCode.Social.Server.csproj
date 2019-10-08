@@ -24,8 +24,10 @@
       <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />
       <ProjectReference Include="..\MCode.Social.Infrastructure\MCode.Social.Infrastructure.csproj" />
     </ItemGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
+    </ItemGroup>
 
 </Project>

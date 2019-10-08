@@ -34,7 +34,9 @@
     <ProjectReference Include="..\Epic.User.Core\Epic.Identity.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
   </ItemGroup>
 
 

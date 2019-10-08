@@ -9,7 +9,9 @@ var artifacts = Argument("artifacts", "./artifacts");
 var sonarkey = EnvironmentVariable("SONARKEY") ?? "";
 var nugetkey = EnvironmentVariable("NUGETKEY") ?? "";
 var amazonER = EnvironmentVariable("AMAZONKEY") ??  "";
+var branch = EnvironmentVariable("CIRCLE_BRANCH") ?? "develop";
 var version = "0.0.1";
+
 
 
 Task("analysis-begin").Does(()=> {
@@ -19,6 +21,11 @@ Task("analysis-begin").Does(()=> {
                         .Append("/k:RoyGI_Interview")
                         .Append("/n:Interview")
                         .Append("/v:{0}",version )
+                        .Append("/d:sonar.cs.opencover.reportsPaths=./TestResults/coverage.opencover.xml")
+                        .Append("/d:sonar.test.exclusions=test/**")
+                        .Append("/d:sonar.exclusions=data/**")
+                        .Append("/d:sonar.branch.name={0}", branch)
+                        .Append("/d:sonar.links.ci=https://circleci.com/gh/RoyGI")
                         .Append("/d:sonar.host.url=https://sonarcloud.io")
                         .Append("/d:sonar.login={0}",sonarkey)
                         .Append("/o:roygi")
@@ -38,7 +45,17 @@ Task("analysis-end").Does(()=> {
 });
 
 Task("test").Does(() => {
-    var setting = new DotNetCoreTestSettings();
+    var setting = new DotNetCoreTestSettings{
+        ArgumentCustomization = args => {
+                return args.Append("/p:CollectCoverage=true")
+                           .Append("/p:CoverletOutputFormat=opencover")
+                           .Append("/p:CoverletOutput=../../TestResults/");
+        },
+        Configuration = configuration,
+        Logger = "trx",
+        ResultsDirectory="./TestResults"
+    };
+    
     DotNetCoreTest(solution, setting);    
 });
 
@@ -124,9 +141,9 @@ Task("default")
         .IsDependentOn("build")
         .IsDependentOn("test")
         .IsDependentOn("analysis-end")
+        .IsDependentOn("docker")
         .IsDependentOn("package")
-        .IsDependentOn("push")
-        .IsDependentOn("docker");
+        .IsDependentOn("push");
  
 
 Task("compile")
