@@ -3,7 +3,7 @@ Feature: UserCreate
   As a user
   I want to provide a user with name, last name, email and the password
 
-  @tag
+
   Scenario: Create a valid user
     Given the user
       | Name | LastName | Email                 | Password | PasswordConfirm |
