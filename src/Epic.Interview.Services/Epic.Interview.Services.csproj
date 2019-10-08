@@ -4,6 +4,15 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <UserSecretsId>server</UserSecretsId>
         <IsPackable>false</IsPackable>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <CodeAnalysisRuleSet>Epic.Interview.Services.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <CodeAnalysisRuleSet>Epic.Interview.Services.ruleset</CodeAnalysisRuleSet>
     </PropertyGroup>
 
     <ItemGroup>
@@ -35,11 +44,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\data\Epic.Interview.Data\Epic.Interview.Data.csproj" />
       <ProjectReference Include="..\Epic.Interview.Application\Epic.Interview.Application.csproj" />
       <ProjectReference Include="..\Epic.Interview.Infrastructure\Epic.Interview.Infrastructure.csproj" />
       <ProjectReference Include="..\Epic.User.Application\Epic.Identity.Application.csproj" />
       <ProjectReference Include="..\Epic.User.Infrastructure\Epic.Identity.Infrastructure.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="..\..\stylecop.json">
+            <Link>stylecop.json</Link>
+        </AdditionalFiles>
     </ItemGroup>
 
 </Project>

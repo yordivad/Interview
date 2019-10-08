@@ -7,6 +7,15 @@
     <Description>DDD Infrastructure</Description>
     <Company>MCode</Company>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <LangVersion>8</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>Epic.Data.Infrastructure.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>Epic.Data.Infrastructure.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +29,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Epic.Common\Epic.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json">
+      <Link>stylecop.json</Link>
+    </AdditionalFiles>
+  </ItemGroup>
+
 
 
 </Project>

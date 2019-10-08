@@ -1,37 +1,35 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Startup.cs" company="MCode Software">
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// <copyright file="Startup.cs" company="MCode">
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Contributors: Roy Gonzalez
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Interview.Services
 {
     using System.Collections.Generic;
-    using System.Reflection;
+
     using Epic.Common;
     using Epic.Data.Infrastructure;
     using Epic.Identity.Application.Handlers;
     using Epic.Identity.Infrastructure;
     using Epic.Interview.Application.Handlers;
-    using Epic.Interview.Data;
     using Epic.Interview.Infrastructure;
     using Epic.Interview.Services.Config;
     using Epic.Interview.Services.Handlers;
     using Epic.Interview.Services.Middleware;
     using Epic.Interview.Services.Swagger;
+
     using MediatR;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -39,7 +37,7 @@ namespace Epic.Interview.Services
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
+
     using Swashbuckle.AspNetCore.Swagger;
     using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -52,12 +50,9 @@ namespace Epic.Interview.Services
         /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="logger">The logger.</param>
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.Configuration
-                .AddMigration(logger);
         }
 
         /// <summary>

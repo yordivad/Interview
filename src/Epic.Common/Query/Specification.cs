@@ -1,19 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" Specification.cs" company="MCode Software">
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// <copyright file="Specification.cs" company="MCode">
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Contributors: Roy Gonzalez
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Common.Query
@@ -41,9 +38,9 @@ namespace Epic.Common.Query
     }
 
     /// <summary>
-    /// The specification class to create queries
+    /// The specification class to create queries.
     /// </summary>
-    /// <typeparam name="T">the type of the entity</typeparam>
+    /// <typeparam name="T">the type of the entity.</typeparam>
     [SuppressMessage(
         "StyleCop.CSharp.MaintainabilityRules",
         "SA1402:FileMayOnlyContainASingleClass",

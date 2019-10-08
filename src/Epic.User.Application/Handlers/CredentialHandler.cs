@@ -1,24 +1,22 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" CredentialHandler.cs" company="MCode Software">
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// <copyright file="CredentialHandler.cs" company="MCode">
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Contributors: Roy Gonzalez
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Identity.Application.Handlers
 {
     using System;
+    using System.Globalization;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
@@ -27,7 +25,8 @@ namespace Epic.Identity.Application.Handlers
 
     using Epic.Common;
     using Epic.Common.Query;
-    using Epic.Identity.Application.Commands;
+    using Epic.Identity.Application.Commands.Request;
+    using Epic.Identity.Application.Commands.Response;
     using Epic.Identity.Core.Domain;
     using Epic.Identity.Core.Repository;
     using Epic.Identity.Core.Specification;
@@ -46,7 +45,7 @@ namespace Epic.Identity.Application.Handlers
     public class CredentialHandler : RequestHandler<Credential, IMono<AuthenticatedUser>>
     {
         /// <summary>
-        /// The settings
+        /// The settings.
         /// </summary>
         private readonly AppSettings settings;
 
@@ -103,10 +102,18 @@ namespace Epic.Identity.Application.Handlers
             var key = Encoding.ASCII.GetBytes(this.settings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
                                       {
-                                          Subject =
-                                              new ClaimsIdentity(
-                                                  new Claim[] { new Claim(ClaimTypes.Name, user.Id.ToString()) }),
-                                          Expires = DateTime.UtcNow.AddDays(7),
+                                          Subject = new ClaimsIdentity(
+                                              new[]
+                                                  {
+                                                      new Claim(ClaimTypes.Name, user.Id.ToString()),
+                                                      new Claim(ClaimTypes.GivenName, user.Name),
+                                                      new Claim(ClaimTypes.Email, user.Email),
+                                                      new Claim(
+                                                          ClaimTypes.Expiration,
+                                                          DateTime.Now.AddDays(2)
+                                                              .ToString(CultureInfo.InvariantCulture)),
+                                                  }),
+                                          Expires = DateTime.UtcNow.AddDays(2),
                                           SigningCredentials = new SigningCredentials(
                                               new SymmetricSecurityKey(key),
                                               SecurityAlgorithms.HmacSha256Signature),

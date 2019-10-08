@@ -1,19 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" ValueObject.cs" company="MCode Software">
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// <copyright file="ValueObject.cs" company="MCode">
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Contributors: Roy Gonzalez
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Common.Domain
@@ -21,9 +18,9 @@ namespace Epic.Common.Domain
     using System;
 
     /// <summary>
-    /// The class to identify an immutable object that don't have any identity
+    /// The class to identify an immutable object that don't have any identity.
     /// </summary>
-    /// <typeparam name="T">The type of the Value object</typeparam>
+    /// <typeparam name="T">The type of the Value object.</typeparam>
     /// <seealso cref="System.IEquatable{T}" />
     public abstract class ValueObject<T> : IEquatable<T>
         where T : ValueObject<T>
@@ -87,10 +84,10 @@ namespace Epic.Common.Domain
         public abstract override int GetHashCode();
 
         /// <summary>
-        /// Compare two object to verify if they are equal
+        /// Compare two object to verify if they are equal.
         /// </summary>
         /// <param name="other">The other.</param>
-        /// <returns>[True] if both are equal, [False] otherwise</returns>
+        /// <returns>[True] if both are equal, [False] otherwise.</returns>
         protected abstract bool IsEqual(T other);
     }
 }

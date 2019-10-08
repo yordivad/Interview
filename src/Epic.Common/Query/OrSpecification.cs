@@ -1,19 +1,16 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=" OrSpecification.cs" company="MCode Software">
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// <copyright file="OrSpecification.cs" company="MCode">
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Contributors: Roy Gonzalez
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace Epic.Common.Query
@@ -25,17 +22,17 @@ namespace Epic.Common.Query
     /// <summary>
     /// Class OrSpecification.
     /// </summary>
-    /// <typeparam name="T">The type of the specification</typeparam>
+    /// <typeparam name="T">The type of the specification.</typeparam>
     /// <seealso cref="Query.Specification{T}" />
     public class OrSpecification<T> : Specification<T>
     {
         /// <summary>
-        /// The left
+        /// The left.
         /// </summary>
         private readonly Specification<T> left;
 
         /// <summary>
-        /// The right
+        /// The right.
         /// </summary>
         private readonly Specification<T> right;
 
