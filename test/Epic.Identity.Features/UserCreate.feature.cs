@@ -11,9 +11,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see https://www.gnu.org/licenses/.
 // </copyright>
-// <summary>
-//  Class UserCreate.feature.cs
-// </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 #region Designer generated code
@@ -48,8 +45,13 @@ namespace Epic.Identity.Features
         public static void FeatureSetup(Microsoft.VisualStudio.TestTools.UnitTesting.TestContext testContext)
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "UserCreate", "  In order to create a user\n  As a user\n  I want to provide a user with name, las" +
-                    "t name, email and the password", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(
+                new System.Globalization.CultureInfo("en-US"),
+                "UserCreate",
+                "  In order to create a user\n  As a user\n  I want to provide a user with name, las"
+                + "t name, email and the password",
+                ProgrammingLanguage.CSharp,
+                ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
 
