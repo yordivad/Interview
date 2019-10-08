@@ -45,7 +45,7 @@ namespace Epic.Identity.Application.Handlers
     public class CredentialHandler : RequestHandler<Credential, IMono<AuthenticatedUser>>
     {
         /// <summary>
-        /// The settings
+        /// The settings.
         /// </summary>
         private readonly AppSettings settings;
 

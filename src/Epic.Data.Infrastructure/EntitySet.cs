@@ -40,8 +40,8 @@ namespace Epic.Data.Infrastructure
         /// <summary>
         /// Entities this instance.
         /// </summary>
-        /// <typeparam name="T">the type of the entity</typeparam>
-        /// <returns>The entity</returns>
+        /// <typeparam name="T">the type of the entity.</typeparam>
+        /// <returns>The entity.</returns>
         public DbSet<T> Entity<T>()
             where T : class
         {

@@ -32,7 +32,7 @@ namespace MCode.Social.Application.Handlers
     public class SetConfigHandler : RequestHandler<SetConfig, IMono<Unit>>
     {
         /// <summary>
-        /// The repository
+        /// The repository.
         /// </summary>
         private readonly IConfigRepository repository;
 

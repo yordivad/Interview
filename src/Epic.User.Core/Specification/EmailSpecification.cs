@@ -30,7 +30,7 @@ namespace Epic.Identity.Core.Specification
     public class EmailSpecification : Specification<User>
     {
         /// <summary>
-        /// The email
+        /// The email.
         /// </summary>
         private readonly string email;
 

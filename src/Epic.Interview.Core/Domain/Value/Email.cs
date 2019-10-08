@@ -24,7 +24,7 @@ namespace Epic.Interview.Core.Domain.Value
     public class Email : ValueObject<Email>
     {
         /// <summary>
-        /// The email
+        /// The email.
         /// </summary>
         private readonly string email;
 
@@ -47,10 +47,10 @@ namespace Epic.Interview.Core.Domain.Value
         }
 
         /// <summary>
-        /// Compare two object to verify if they are equal
+        /// Compare two object to verify if they are equal.
         /// </summary>
         /// <param name="other">The other.</param>
-        /// <returns>[True] if both are equal, [False] otherwise</returns>
+        /// <returns>[True] if both are equal, [False] otherwise.</returns>
         protected override bool IsEqual(Email other)
         {
             return this.email == other.email;

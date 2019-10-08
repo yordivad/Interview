@@ -22,17 +22,17 @@ namespace Epic.Common.Query
     /// <summary>
     /// Class OrSpecification.
     /// </summary>
-    /// <typeparam name="T">The type of the specification</typeparam>
+    /// <typeparam name="T">The type of the specification.</typeparam>
     /// <seealso cref="Query.Specification{T}" />
     public class OrSpecification<T> : Specification<T>
     {
         /// <summary>
-        /// The left
+        /// The left.
         /// </summary>
         private readonly Specification<T> left;
 
         /// <summary>
-        /// The right
+        /// The right.
         /// </summary>
         private readonly Specification<T> right;
 

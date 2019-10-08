@@ -34,7 +34,7 @@ namespace Epic.Interview.Services.Controllers
     public class ReviewController
     {
         /// <summary>
-        /// The mediator
+        /// The mediator.
         /// </summary>
         private readonly IMediator mediator;
 

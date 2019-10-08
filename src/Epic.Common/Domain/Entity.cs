@@ -20,7 +20,7 @@ namespace Epic.Common.Domain
     /// <summary>
     /// Class Entity.
     /// </summary>
-    /// <typeparam name="TK">the type of the key</typeparam>
+    /// <typeparam name="TK">the type of the key.</typeparam>
     /// <seealso>
     ///     <cref>System.IEquatable{Entity{TK}}</cref>
     /// </seealso>

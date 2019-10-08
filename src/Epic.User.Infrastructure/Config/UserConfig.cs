@@ -9,7 +9,7 @@
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see https://www.gnu.org/licenses/.
+// along with this program.  If not, see https://www.gnu.org/licenses.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ namespace Epic.Identity.Infrastructure.Config
         /// <summary>
         /// Configures the entity of type <typeparamref>
         ///     <name>TEntity</name>
-        /// </typeparamref>
+        /// </typeparamref>.
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity type.</param>
         public void Configure(EntityTypeBuilder<User> builder)

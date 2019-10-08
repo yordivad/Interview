@@ -4,6 +4,7 @@
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <IsPackable>false</IsPackable>
         <RunCodeAnalysis>false</RunCodeAnalysis>
+        <LangVersion>8</LangVersion>
     </PropertyGroup>
     
     <ItemGroup>

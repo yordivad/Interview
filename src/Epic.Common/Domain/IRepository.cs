@@ -22,8 +22,8 @@ namespace Epic.Common.Domain
     /// <summary>
     /// Interface IRepository.
     /// </summary>
-    /// <typeparam name="TK">The type of the key</typeparam>
-    /// <typeparam name="T">The type of the entity</typeparam>
+    /// <typeparam name="TK">The type of the key.</typeparam>
+    /// <typeparam name="T">The type of the entity.</typeparam>
     public interface IRepository<in TK, T>
         where T : Entity<TK>
     {
@@ -31,7 +31,7 @@ namespace Epic.Common.Domain
         /// Deletes the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>The mono of type T</returns>
+        /// <returns>The mono of type T.</returns>
         IMono<T> Delete(TK key);
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Epic.Interview.Core.Repository
     /// Interface IEmployeeRepository
     /// Implements the <see>
     ///     <cref>Common.Domain.IRepository{integer, Employee}</cref>
-    /// </see>
+    /// </see>.
     /// </summary>
     /// <seealso>
     ///     <cref>Common.Domain.IRepository{integer, Employee}</cref>

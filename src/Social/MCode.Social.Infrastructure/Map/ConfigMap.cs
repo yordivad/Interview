@@ -31,7 +31,7 @@ namespace MCode.Social.Infrastructure.Map
         /// <summary>
         /// Configures the entity of type <typeparamref>
         ///     <name>TEntity</name>
-        /// </typeparamref>
+        /// </typeparamref>.
         /// </summary>
         /// <param name="builder">The builder to be used to configure the entity type.</param>
         public void Configure(EntityTypeBuilder<Config> builder)

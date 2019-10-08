@@ -38,9 +38,9 @@ namespace Epic.Common.Query
     }
 
     /// <summary>
-    /// The specification class to create queries
+    /// The specification class to create queries.
     /// </summary>
-    /// <typeparam name="T">the type of the entity</typeparam>
+    /// <typeparam name="T">the type of the entity.</typeparam>
     [SuppressMessage(
         "StyleCop.CSharp.MaintainabilityRules",
         "SA1402:FileMayOnlyContainASingleClass",

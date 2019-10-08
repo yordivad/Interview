@@ -23,7 +23,7 @@ namespace Epic.Common.Query
         /// <summary>
         /// And the specified right.
         /// </summary>
-        /// <typeparam name="T">The type T</typeparam>
+        /// <typeparam name="T">The type T.</typeparam>
         /// <param name="left">The left.</param>
         /// <param name="right">The right.</param>
         /// <returns>The specification.</returns>

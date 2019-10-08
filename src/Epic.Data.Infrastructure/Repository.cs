@@ -32,7 +32,7 @@ namespace Epic.Data.Infrastructure
         where T : Entity<TK>
     {
         /// <summary>
-        /// The set
+        /// The set.
         /// </summary>
         private readonly IEntitySet set;
 
@@ -49,7 +49,7 @@ namespace Epic.Data.Infrastructure
         /// Deletes the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>The mono of type T</returns>
+        /// <returns>The mono of type T.</returns>
         public IMono<T> Delete(TK key)
         {
             return this.Find(key).Map(v => this.set.Entity<T>().Remove(v).Entity);

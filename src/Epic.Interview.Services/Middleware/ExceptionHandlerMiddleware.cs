@@ -29,7 +29,7 @@ namespace Epic.Interview.Services.Middleware
     public class ExceptionHandlerMiddleware
     {
         /// <summary>
-        /// The next
+        /// The next.
         /// </summary>
         private readonly RequestDelegate next;
 

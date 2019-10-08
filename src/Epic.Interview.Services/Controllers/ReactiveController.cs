@@ -29,7 +29,7 @@ namespace Epic.Interview.Services.Controllers
         /// <summary>
         /// Results the specified task.
         /// </summary>
-        /// <typeparam name="T">The type of the response</typeparam>
+        /// <typeparam name="T">The type of the response.</typeparam>
         /// <param name="task">The task.</param>
         /// <returns>the IActionResult.</returns>
         public IActionResult Result<T>(Task<IMono<T>> task)

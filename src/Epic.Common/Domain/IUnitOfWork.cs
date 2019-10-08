@@ -19,7 +19,7 @@ namespace Epic.Common.Domain
 
     /// <summary>
     /// Interface IUnitOfWork
-    /// Implements the <see cref="IDisposable" />
+    /// Implements the <see cref="IDisposable" />.
     /// </summary>
     /// <seealso cref="IDisposable" />
     public interface IUnitOfWork : IDisposable

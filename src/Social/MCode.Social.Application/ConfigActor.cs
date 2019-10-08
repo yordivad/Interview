@@ -23,14 +23,14 @@ namespace MCode.Social.Application
     using Orleankka;
 
     /// <summary>
-    /// The config actor
+    /// The config actor.
     /// </summary>
     /// <seealso cref="Orleankka.DispatchActorGrain" />
     /// <seealso cref="MCode.Social.Abstraction.Abstract.IConfigActor" />
     public class ConfigActor : DispatchActorGrain, IConfigActor
     {
         /// <summary>
-        /// The mediator
+        /// The mediator.
         /// </summary>
         private readonly IMediator mediator;
 

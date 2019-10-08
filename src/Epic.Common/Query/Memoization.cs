@@ -20,16 +20,16 @@ namespace Epic.Common.Query
     /// <summary>
     /// Class Memorization.
     /// </summary>
-    /// <typeparam name="T">The type of the specification</typeparam>
+    /// <typeparam name="T">The type of the specification.</typeparam>
     public class Memoization<T>
     {
         /// <summary>
-        /// The has value
+        /// The has value.
         /// </summary>
         private bool hasValue;
 
         /// <summary>
-        /// The value
+        /// The value.
         /// </summary>
         private T value;
 

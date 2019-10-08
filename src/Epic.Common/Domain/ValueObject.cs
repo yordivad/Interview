@@ -18,9 +18,9 @@ namespace Epic.Common.Domain
     using System;
 
     /// <summary>
-    /// The class to identify an immutable object that don't have any identity
+    /// The class to identify an immutable object that don't have any identity.
     /// </summary>
-    /// <typeparam name="T">The type of the Value object</typeparam>
+    /// <typeparam name="T">The type of the Value object.</typeparam>
     /// <seealso cref="System.IEquatable{T}" />
     public abstract class ValueObject<T> : IEquatable<T>
         where T : ValueObject<T>
@@ -84,10 +84,10 @@ namespace Epic.Common.Domain
         public abstract override int GetHashCode();
 
         /// <summary>
-        /// Compare two object to verify if they are equal
+        /// Compare two object to verify if they are equal.
         /// </summary>
         /// <param name="other">The other.</param>
-        /// <returns>[True] if both are equal, [False] otherwise</returns>
+        /// <returns>[True] if both are equal, [False] otherwise.</returns>
         protected abstract bool IsEqual(T other);
     }
 }

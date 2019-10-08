@@ -22,7 +22,7 @@ namespace Epic.Interview.Core.Repository
     /// Interface IReviewRepository
     /// Implements the <see>
     ///     <cref>Common.Domain.IRepository{long, Review}</cref>
-    /// </see>
+    /// </see>.
     /// </summary>
     /// <seealso>
     ///     <cref>Common.Domain.IRepository{long, Review}</cref>
