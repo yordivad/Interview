@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
         <IsPackable>false</IsPackable>
+        <RunCodeAnalysis>false</RunCodeAnalysis>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -19,10 +20,11 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
         <PackageReference Include="Moq" Version="4.13.0" />
         <PackageReference Include="MSTest.TestAdapter" Version="2.0.0" />
-        <PackageReference Include="MSTest.TestFramework" Version="2.0.0" />
         <PackageReference Include="Reactor.Core" Version="0.6.2" />
         <PackageReference Include="Shouldly" Version="3.0.2" />
         <PackageReference Include="SpecFlow" Version="3.0.225" />
+        <PackageReference Include="SpecFlow.Assist.Dynamic" Version="1.4.1" />
+        <PackageReference Include="SpecFlow.Autofac" Version="3.0.225" />
         <PackageReference Include="SpecFlow.MsTest" Version="3.0.225" />
         <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.0.225" />
     </ItemGroup>
@@ -31,9 +33,22 @@
       <ProjectReference Include="..\..\src\Epic.User.Application\Epic.Identity.Application.csproj" />
       <ProjectReference Include="..\..\src\Epic.User.Core\Epic.Identity.Core.csproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
-        <None Include="*.feature" />
+
+      <Compile Update="UserCreate.feature.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>UserCreate.feature</DependentUpon>
+      </Compile>
+
+    </ItemGroup>
+
+    <ItemGroup>
+      <SpecFlowFeatureFiles Update="UserCreate.feature">
+        <Generator>SpecFlowSingleFileGenerator</Generator>
+        <LastGenOutput>UserCreate.feature.cs</LastGenOutput>
+      </SpecFlowFeatureFiles>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -23,5 +23,8 @@
       <ProjectReference Include="..\MCode.Social.Core\MCode.Social.Core.csproj" />
       <ProjectReference Include="..\MCode.Social.Infrastructure\MCode.Social.Infrastructure.csproj" />
     </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
 
 </Project>

@@ -27,5 +27,8 @@
     <ProjectReference Include="..\Epic.Data.Infrastructure\Epic.Data.Infrastructure.csproj" />
     <ProjectReference Include="..\Epic.User.Core\Epic.Identity.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
 
 </Project>
