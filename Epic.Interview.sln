@@ -41,8 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{A2184D53-7EC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{21DFD813-18F9-43EE-8E71-180A4BE22A3F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{BC4BF317-D6C4-4D19-8D65-E1FE93685577}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Social", "Social", "{22F81065-D730-4CBD-81B5-22211ADD04CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCode.Social.Infrastructure", "src\Social\MCode.Social.Infrastructure\MCode.Social.Infrastructure.csproj", "{A205D04A-29C2-4576-8F2B-AA1212645FCD}"

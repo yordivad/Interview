@@ -1,0 +1,11 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: mcode-dev
+  region: us-east-2
+  
+nodeGroups:
+  - name: node01
+    instanceType: t2.micro
+    desiredCapacity: 2

@@ -1,14 +1,13 @@
 #module nuget:?package=Cake.DotNetTool.Module
 #addin nuget:?package=Cake.Docker
 
-
 var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "Epic.Interview.sln");
-var artifacts = Argument("artifacts", "./artifacts");
+var artifacts = Argument("artifacts", "./.artifacts");
 var sonarkey = EnvironmentVariable("SONARKEY") ?? "";
-var nugetkey = EnvironmentVariable("NUGETKEY") ?? "";
-var amazonER = EnvironmentVariable("AMAZONKEY") ??  "";
+var ApiKey = EnvironmentVariable("APIKEY") ?? "";
+
 var branch = EnvironmentVariable("CIRCLE_BRANCH") ?? "develop";
 var version = "0.0.1";
 
@@ -75,13 +74,13 @@ Task("version").Does(() => {
     Information(version);
 });
 
-Task("package").Does(() => {
+Task("pack").Does(() => {
       var settings = new DotNetCorePackSettings
          {
             ArgumentCustomization = 
-                    args => args.Append($"/p:Version={version}")
-                                .Append($"/p:IncludeSymbols=true")
-                                .Append("/p:SymbolPackageFormat=snupkg"),
+                                args => args.Append($"/p:Version={version}")
+                                            .Append($"/p:IncludeSymbols=true")
+                                            .Append("/p:SymbolPackageFormat=snupkg"),
             Configuration = configuration,
             OutputDirectory = artifacts
          };
@@ -91,14 +90,13 @@ Task("package").Does(() => {
 
 
 Task("push").Does(() => {
-
-     var settings = new DotNetCoreNuGetPushSettings
-     {
-         Source = "https://api.nuget.org/v3/index.json",
-         ApiKey = nugetkey
-     };
-     
-     DotNetCoreNuGetPush( "./artifacts/*.nupkg", settings);
+   var settings = new DotNetCoreNuGetPushSettings
+       {
+           Source = "https://api.bintray.com/nuget/roygi/mlibrary",
+           ApiKey = $"roygi:{ApiKey}"
+       };
+       
+    DotNetCoreNuGetPush( "./.artifacts/*.nupkg", settings);
 });
 
 
@@ -107,7 +105,7 @@ Task("restore").Does(()=> {
 });
 
 Task("clean").Does(() =>{
-    CleanDirectories("./artifacts");
+    CleanDirectories("./.artifacts");
     CleanDirectories(string.Format("./**/obj/{0}", configuration));
     CleanDirectories(string.Format("./**/bin/{0}", configuration));
 });
@@ -121,17 +119,50 @@ Task("build").Does(()=> {
     DotNetCoreBuild(solution, setting);
 });
 
-Task("docker")
+Task("dockerLogin")
     .Does(() => {
-        var server_setting = new DockerImageBuildSettings { Tag = new[] {$"server:latest"}, File="docker/server/Dockerfile" };
-        DockerBuild(server_setting,".");
-        DockerTag($"server:latest", $"{amazonER}/server:{version}");
-        DockerPush($"{amazonER}/server:{version}");
-        var web_setting = new DockerImageBuildSettings{Tag = new[] {$"web:latest" }, File="docker/web/Dockerfile"};
-        DockerBuild(web_setting, ".");
-        DockerTag($"web:latest", $"{amazonER}/web:{version}");
-        DockerPush($"{amazonER}/web:{version}");       
+   
+        var docker_setting = new DockerRegistryLoginSettings {
+                    Username = "roygi",
+                    Password = ApiKey,
+                };
+                
+        DockerLogin(docker_setting, "roygi-docker-mdocker.bintray.io");
+    
     });
+    
+Task("dockerServer")
+    .Does(() => {
+        var server_setting = new DockerImageBuildSettings { Tag = new[] {$"server:latest"}, File="deploy/docker/server/Dockerfile" };
+        DockerBuild(server_setting,".");
+            
+        var server =  $"roygi-docker-mdocker.bintray.io/server/server";
+        DockerTag($"server:latest",$"{server}:{version}");
+        DockerPush($"{server}:{version}");
+        
+        DockerTag($"server:latest", $"{server}:latest");
+        DockerPush($"{server}:latest");
+        
+    });    
+
+Task("dockerWeb")
+    .Does(()=> {
+         var web_setting = new DockerImageBuildSettings{Tag = new[] {$"web:latest" }, File="deploy/docker/web/Dockerfile"};
+         DockerBuild(web_setting, ".");
+            
+        var web = $"roygi-docker-mdocker.bintray.io/web/web";
+        DockerTag($"web:latest", $"{web}:{version}");
+        DockerPush($"{web}:{version}");
+        
+        DockerTag($"web:latest", $"{web}:latest");
+        DockerPush($"{web}:latest");
+        
+    });
+
+Task("docker")
+    .IsDependentOn("dockerLogin")
+    .IsDependentOn("dockerServer")
+    .IsDependentOn("dockerWeb");
     
 Task("default")
         .IsDependentOn("clean")
@@ -142,10 +173,9 @@ Task("default")
         .IsDependentOn("test")
         .IsDependentOn("analysis-end")
         .IsDependentOn("docker")
-        .IsDependentOn("package")
+        .IsDependentOn("pack")
         .IsDependentOn("push");
  
-
 Task("compile")
         .IsDependentOn("clean")
         .IsDependentOn("restore")
@@ -175,7 +205,7 @@ Task("nuget")
         .IsDependentOn("restore")
         .IsDependentOn("version")
         .IsDependentOn("build")
-        .IsDependentOn("package")
+        .IsDependentOn("pack")
         .IsDependentOn("push");
      
 RunTarget(target);
