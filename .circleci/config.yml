@@ -61,13 +61,18 @@ jobs:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           name: Install tools .NET Core
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
+      - run:
+          name: Install docker client
+          command: |
+            curl -L -o /tmp/docker-19.03.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz
+            tar -xz -C /tmp -f /tmp/docker-19.03.3.tgz
+            mv /tmp/docker/* /usr/bin
       - run:
           name: Deploy
           command: |

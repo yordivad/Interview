@@ -375,3 +375,5 @@ tools/
 .sonarqube/
 
 web/Epic.Site/dist/
+
+.tools/
