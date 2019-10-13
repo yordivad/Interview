@@ -61,6 +61,7 @@ jobs:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Install tools .NET Core
           command: |
