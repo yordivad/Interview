@@ -1,4 +1,6 @@
 language: csharp
+dotnet: 3.0.100
+mono: none
 matrix:
   include:
     - os: linux
@@ -6,17 +8,12 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode11
-    - os: windows
 branches:
   only:
     - master
     - develop
 install:
   - dotnet tool install -g Cake.Tool
-env:
-  global:
-    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-    - DOTNET_CLI_TELEMETRY_OPTOUT=1
-dotnet: 2.1.502
+  - export PATH="$PATH:$HOME/.dotnet/tools"
 script:
-  - dotnet cake --target=testing
+  - dotnet cake --target=compile

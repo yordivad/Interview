@@ -119,7 +119,7 @@ Task("build").Does(()=> {
     DotNetCoreBuild(solution, setting);
 });
 
-Task("dockerLogin")
+Task("docker login")
     .Does(() => {
    
         var docker_setting = new DockerRegistryLoginSettings {
@@ -131,7 +131,7 @@ Task("dockerLogin")
     
     });
     
-Task("dockerServer")
+Task("docker server")
     .Does(() => {
         var server_setting = new DockerImageBuildSettings { Tag = new[] {$"server:latest"}, File="deploy/docker/server/Dockerfile" };
         DockerBuild(server_setting,".");
@@ -145,7 +145,7 @@ Task("dockerServer")
         
     });    
 
-Task("dockerWeb")
+Task("docker web")
     .Does(()=> {
          var web_setting = new DockerImageBuildSettings{Tag = new[] {$"web:latest" }, File="deploy/docker/web/Dockerfile"};
          DockerBuild(web_setting, ".");
@@ -159,10 +159,13 @@ Task("dockerWeb")
         
     });
 
-Task("docker")
-    .IsDependentOn("dockerLogin")
-    .IsDependentOn("dockerServer")
-    .IsDependentOn("dockerWeb");
+Task("deploy docker server")
+    .IsDependentOn("docker login")
+    .IsDependentOn("docker server");
+
+Task("deploy docker web")
+    .IsDependentOn("docker login")
+    .IsDependentOn("docker web");
     
 Task("default")
         .IsDependentOn("clean")
@@ -172,7 +175,8 @@ Task("default")
         .IsDependentOn("build")
         .IsDependentOn("test")
         .IsDependentOn("analysis-end")
-        .IsDependentOn("docker")
+        .IsDependentOn("deploy docker server")
+        .IsDependentOn("deploy docker web")
         .IsDependentOn("pack")
         .IsDependentOn("push");
  
@@ -196,9 +200,13 @@ Task("quality")
         .IsDependentOn("test")
         .IsDependentOn("analysis-end");
         
-Task("deploy")
+Task("deploy-server")
         .IsDependentOn("version")
-        .IsDependentOn("docker");
+        .IsDependentOn("deploy docker server");
+
+Task("deploy-web")
+        .IsDependentOn("version")
+        .IsDependentOn("deploy docker web");
         
 Task("nuget")
         .IsDependentOn("clean")
