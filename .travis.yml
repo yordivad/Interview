@@ -1,0 +1,19 @@
+language: csharp
+dotnet: 3.0.100
+mono: none
+matrix:
+  include:
+    - os: linux
+      dist: bionic
+      sudo: required
+    - os: osx
+      osx_image: xcode11
+branches:
+  only:
+    - master
+    - develop
+install:
+  - dotnet tool install -g Cake.Tool
+  - export PATH="$PATH:$HOME/.dotnet/tools"
+script:
+  - dotnet cake --target=compile

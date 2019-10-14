@@ -34,7 +34,7 @@ spec:
         - name: aws-ecr
       containers:
         - name: dev-pod
-          image: 407669251131.dkr.ecr.us-east-2.amazonaws.com/server:1.1.4-beta
+          image: roygi-docker-mdocker.bintray.io/server/server:latest
           ports:
             - containerPort: 80
           livenessProbe:

@@ -56,15 +56,12 @@ jobs:
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet cake --target=quality
 
-  deploy:
+  deploy-server:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    environment:
-      DEBIAN_FRONTEND: noninteractive
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 18.09.3
+      - setup_remote_docker
       - run:
           name: Install tools .NET Core
           command: |
@@ -72,35 +69,43 @@ jobs:
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
       - run:
-          name: Install aws tools
+          name: Install docker client
           command: |
-            apt update
-            apt install -y -q awscli
-            apt install -y -q python3-pip
-            pip3 install --upgrade awscli
+            curl -L -o /tmp/docker-19.03.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz
+            tar -xz -C /tmp -f /tmp/docker-19.03.3.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Deploy
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet cake --target=deploy-server
+
+
+  deploy-web:
+    docker:
+      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install tools .NET Core
+          command: |
+            export PATH="$PATH:$HOME/.dotnet/tools"
+            dotnet tool install -g nbgv
+            dotnet tool install -g Cake.Tool
       - run:
           name: Install docker client
           command: |
-            curl -L -o /tmp/docker-18.09.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-18.09.3.tgz
-            tar -xz -C /tmp -f /tmp/docker-18.09.3.tgz
+            curl -L -o /tmp/docker-19.03.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz
+            tar -xz -C /tmp -f /tmp/docker-19.03.3.tgz
             mv /tmp/docker/* /usr/bin
-      - run:
-          name: Configure aws client
-          command: |
-              aws configure set region ${AWS_DEFAULT_REGION}
-              aws configure set ws_acacess_key_id ${AWS_ACCESS_KEY_ID}
-              aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
-      - run:
-          name: Configure aws client
-          command: |
-              eval $(aws ecr get-login --no-include-email)
       - run:
           name: Deploy
           command: |
               export PATH="$PATH:$HOME/.dotnet/tools"
-              dotnet cake --target=deploy
+              dotnet cake --target=deploy-web
 
-  nuget:
+  deploy-nuget:
     docker:
       - image: mcr.microsoft.com/dotnet/core/sdk:2.2
     steps:
@@ -110,15 +115,15 @@ jobs:
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             apt update
-            apt -y install default-jdk
             dotnet tool install -g nbgv
             dotnet tool install -g Cake.Tool
-            dotnet tool install -g dotnet-sonarscanner
+            
       - run:
           name: Quality
           command: |
             export PATH="$PATH:$HOME/.dotnet/tools"
             dotnet cake --target=nuget
+
 
 workflows:
   version: 2
@@ -130,10 +135,12 @@ workflows:
           requires:
             - build
             - test
-      - deploy:
+      - deploy-server:
           requires:
-            - build
-            - test
-      - nuget:
+            - quality
+      - deploy-web:
           requires:
-            - deploy
+            - quality
+      - deploy-nuget:
+          requires:
+            - quality
