@@ -1,0 +1,20 @@
+version: "1.0"
+stateges:
+  - "clone"
+  - "build"
+steps:
+  main_clone:
+    stage: "clone"
+    type: "git-clone"
+    repo: "RoyGI/Interview"
+    revision: "${{CF_BRANCH}}"
+  build:
+    stage: "build"
+    type: "build"
+    image_name: "builder"
+    dockerfile: "deploy/docker/build/Dockerfile"
+  devbuild:
+    stage: "build"
+    type: "build"
+    image_name: "builder"
+    dockerfile: "deploy/docker/build/Dockerfile"

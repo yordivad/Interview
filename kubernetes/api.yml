@@ -1,0 +1,53 @@
+#Server Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-svc
+spec:
+  selector:
+    component: api
+  ports:
+    - port: 80
+      targetPort: 80
+
+---
+# Server Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: api
+  template:
+    metadata:
+      labels:
+        component: api
+    spec:
+      containers:
+        - name: api-pod
+          image: roygi-docker-mdocker.bintray.io/api/api:latest
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            tcpSocket:
+              port: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: ASPNETCORE_URLS
+              value: "http://+:80"
+            - name: ConnectionStrings__default
+              valueFrom:
+                secretKeyRef:
+                  key: connection
+                  name: m-secret
+            - name: AppSettings__secret
+              valueFrom:
+                secretKeyRef:
+                  key: secret
+                  name: m-secret

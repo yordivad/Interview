@@ -1,0 +1,13 @@
+####{BSB GENERATED: NO EDIT
+FLG -ppx '/home/roy/workspace/Interview/ui/mobile/node_modules/bs-platform/lib/bsppx.exe -bs-jsx 3'
+S /home/roy/workspace/Interview/ui/mobile/node_modules/bs-platform/lib/ocaml
+B /home/roy/workspace/Interview/ui/mobile/node_modules/bs-platform/lib/ocaml
+FLG -nostdlib
+FLG -w -30-40+6+7+27+32..39+44+45+101
+S /home/roy/workspace/Interview/ui/mobile/node_modules/reason-react/lib/ocaml
+B /home/roy/workspace/Interview/ui/mobile/node_modules/reason-react/lib/ocaml
+S /home/roy/workspace/Interview/ui/mobile/node_modules/reason-react-native/lib/ocaml
+B /home/roy/workspace/Interview/ui/mobile/node_modules/reason-react-native/lib/ocaml
+S src
+B lib/bs/src
+####BSB GENERATED: NO EDIT}
