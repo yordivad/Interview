@@ -1,146 +1,53 @@
 version: 2.1
-orbs:
-  docker: circleci/docker@0.5.13
-  
 jobs:
-  
-  build:
+  csharp-build:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+      - image: roygi-docker-mdocker.bintray.io/dotnet/sdk:2.2
     steps:
       - checkout
-      - run:
-          name: Install "tools" .NET Core
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g Cake.Tool
       - run:
           name: Build
           command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=compile
-  
-  test:
-    docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    steps:
-      - checkout
-      - run:
-          name: Install "tools" .NET Core
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g Cake.Tool
-      - run:
-          name: Test
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=testing
+            cd csharp
+            dotnet cake
 
-  quality:
+  deploy:
     docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    steps:
-      - checkout
-      - run:
-          name: Install "tools" .NET Core
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            apt update
-            apt -y install default-jdk
-            dotnet tool install -g nbgv
-            dotnet tool install -g Cake.Tool
-            dotnet tool install -g dotnet-sonarscanner
-      - run:
-          name: Quality
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=quality
-
-  deploy-server:
-    docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
+      - image:  roygi-docker-mdocker.bintray.io/skaffold:latest
     steps:
       - checkout
       - setup_remote_docker
       - run:
-          name: Install tools .NET Core
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g nbgv
-            dotnet tool install -g Cake.Tool
+          name: docker login
+          command: docker login -u roygi -p ${APIKEY} roygi-docker-mdocker.bintray.io
       - run:
-          name: Install docker client
+          name: set secret
           command: |
-            curl -L -o /tmp/docker-19.03.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz
-            tar -xz -C /tmp -f /tmp/docker-19.03.3.tgz
-            mv /tmp/docker/* /usr/bin
+            cd k8s
+            echo -n '${DBCONNECTION}' | base64 | sed -i 's/{{DBCONNECTION}}/\1/g' secret.yml
+            echo -n '${SECRET}' | base64 | sed -i 's/{{SECRET}}/\1/g' secret.yml
       - run:
-          name: Deploy
+          name: set kube config
           command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=deploy-server
-
-
-  deploy-web:
-    docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    steps:
-      - checkout
-      - setup_remote_docker
+            mkdir ${HOME}/.kube
+            cp ./k8s/config.yml ${HOME}/.kube/config
+            cd ${HOME}/.kube
+            sed -i 's/{{cluster}}/'"${CLUSTER}"'/g' config.yaml
+            sed -i 's/{{certificate}}/'"${CERTIFICATE}"'/g' config.yaml
+            sed -i 's/{{token}}/'"${TOKEN}"'/g' config.yaml
+            sed -i 's/{{server}}/'"${SERVER}"'/g' config.yaml
+            sed -i 's/{{user}}/'"${USER}"'/g' config.yaml
+            kubectl config use-context ${CLUSTER}
       - run:
-          name: Install tools .NET Core
+          name: skaffold deploy
           command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet tool install -g nbgv
-            dotnet tool install -g Cake.Tool
-      - run:
-          name: Install docker client
-          command: |
-            curl -L -o /tmp/docker-19.03.3.tgz https://download.docker.com/linux/static/stable/x86_64/docker-19.03.3.tgz
-            tar -xz -C /tmp -f /tmp/docker-19.03.3.tgz
-            mv /tmp/docker/* /usr/bin
-      - run:
-          name: Deploy
-          command: |
-              export PATH="$PATH:$HOME/.dotnet/tools"
-              dotnet cake --target=deploy-web
-
-  deploy-nuget:
-    docker:
-      - image: mcr.microsoft.com/dotnet/core/sdk:2.2
-    steps:
-      - checkout
-      - run:
-          name: Install "tools" .NET Core
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            apt update
-            dotnet tool install -g nbgv
-            dotnet tool install -g Cake.Tool
-            
-      - run:
-          name: Quality
-          command: |
-            export PATH="$PATH:$HOME/.dotnet/tools"
-            dotnet cake --target=nuget
-
+            skaffold run
 
 workflows:
   version: 2
   delivery:
     jobs:
-      - build
-      - test
-      - quality:
+      - csharp-build
+      - deploy:
           requires:
-            - build
-            - test
-      - deploy-server:
-          requires:
-            - quality
-      - deploy-web:
-          requires:
-            - quality
-      - deploy-nuget:
-          requires:
-            - quality
+            - csharp-build

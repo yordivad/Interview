@@ -1,0 +1,23 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: db-migration
+spec:
+  schedule: "* 0 */2 * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: cron-batch-job
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: dbmigration-pod
+              image: roygi-docker-mdocker.bintray.io/dbmigration
+              env:
+                - name: ConnectionStrings__default
+                  valueFrom:
+                    secretKeyRef:
+                      key: connection
+                      name: m-secret

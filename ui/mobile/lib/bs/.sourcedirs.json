@@ -1,0 +1,1 @@
+{ "dirs" : [ "src" ] , "pkgs" : [ [ "reason-react-native" , "/home/roy/workspace/Interview/ui/mobile/node_modules/reason-react-native" ] , [ "bs-platform" , "/home/roy/workspace/Interview/ui/mobile/node_modules/bs-platform" ] , [ "reason-react" , "/home/roy/workspace/Interview/ui/mobile/node_modules/reason-react" ] ] , "generated" : [] }

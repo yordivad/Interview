@@ -1,0 +1,33 @@
+apiVersion: skaffold/v1beta16
+kind: Config
+metadata:
+  name: interview
+build:
+  artifacts:
+  - image: roygi-docker-mdocker.bintray.io/docs
+    context: docs
+    docker:
+      dockerfile: deploy/Dockerfile
+  - image: roygi-docker-mdocker.bintray.io/api
+    context: csharp
+    docker:
+      dockerfile: deploy/Dockerfile
+  - image: roygi-docker-mdocker.bintray.io/web
+    context: ui/web
+    docker:
+      dockerfile: deploy/Dockerfile
+  - image: roygi-docker-mdocker.bintray.io/dbmigration
+    context: data
+    docker:
+      dockerfile: deploy/Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - k8s/api.yml
+    - k8s/dbmigration.yml
+    - k8s/docs.yml
+    - k8s/ingress.yml
+    - k8s/issuer.yml
+    - k8s/redis.yml
+    - k8s/web.yml
+  

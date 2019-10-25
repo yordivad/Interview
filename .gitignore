@@ -374,6 +374,6 @@ tools/
 
 .sonarqube/
 
-web/Epic.Site/dist/
+ui/web/dist/
 
 .tools/

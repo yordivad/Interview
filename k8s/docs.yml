@@ -1,0 +1,38 @@
+#Server Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: docs-svc
+spec:
+  selector:
+    component: docs
+  ports:
+    - port: 80
+      targetPort: 3000
+
+---
+# Server Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docs-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: docs
+  template:
+    metadata:
+      labels:
+        component: docs
+    spec:
+      containers:
+        - name: docs-pod
+          image: roygi-docker-mdocker.bintray.io/docs
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            tcpSocket:
+              port: 3000

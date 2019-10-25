@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: m-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: m-issuer
+spec:
+  tls:
+    - hosts:
+        - web.mcode.ninja
+        - api.mcode.ninja
+        - docs.mcode.ninja
+      secretName: m-cert
+  rules:
+    - host: web.mcode.ninja
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: web-svc
+              servicePort: 80
+    - host: api.mcode.ninja
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: api-svc
+              servicePort: 80
+    - host: docs.mcode.ninja
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: docs-svc
+              servicePort: 80

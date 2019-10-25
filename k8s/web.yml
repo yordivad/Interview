@@ -1,0 +1,41 @@
+# Web Services.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-svc
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    component: web
+---
+
+# Web Deployment
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: web-deploy
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata:
+      name: web-pod
+      labels:
+        component: web
+    spec:
+      containers:
+        - name: web
+          image: roygi-docker-mdocker.bintray.io/web
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            tcpSocket:
+              port: 80

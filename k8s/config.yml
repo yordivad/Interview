@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    certificate-authority-data: {{certificate}}
+    server: {{server}}
+  name: {{cluster}}
+contexts:
+- context:
+    cluster: {{cluster}}
+    user: {{user}}
+  name: {{cluster}}
+current-context: {{cluster}}
+users:
+- name: {{user}}
+  user:
+    token: {{token}}

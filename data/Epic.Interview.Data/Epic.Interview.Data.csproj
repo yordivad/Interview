@@ -24,16 +24,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="..\..\stylecop.json">
+      <AdditionalFiles Include="..\stylecop.json">
         <Link>stylecop.json</Link>
       </AdditionalFiles>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Evolve" Version="2.2.0" />
+      <PackageReference Include="Evolve" Version="2.3.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
       <PackageReference Include="Npgsql" Version="4.1.1" />
     </ItemGroup>
 
+    
 </Project>

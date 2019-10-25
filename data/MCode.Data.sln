@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epic.Interview.Data", "Epic.Interview.Data\Epic.Interview.Data.csproj", "{05FD145D-3D7E-4414-A469-B5AD88F079BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCode.Interview.Data.App", "MCode.Interview.Data.App\MCode.Interview.Data.App.csproj", "{6C87AA5D-A941-4FC8-9A6D-72C2EAF3DEAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05FD145D-3D7E-4414-A469-B5AD88F079BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05FD145D-3D7E-4414-A469-B5AD88F079BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05FD145D-3D7E-4414-A469-B5AD88F079BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05FD145D-3D7E-4414-A469-B5AD88F079BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C87AA5D-A941-4FC8-9A6D-72C2EAF3DEAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C87AA5D-A941-4FC8-9A6D-72C2EAF3DEAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C87AA5D-A941-4FC8-9A6D-72C2EAF3DEAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C87AA5D-A941-4FC8-9A6D-72C2EAF3DEAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

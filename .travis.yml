@@ -16,4 +16,5 @@ install:
   - dotnet tool install -g Cake.Tool
   - export PATH="$PATH:$HOME/.dotnet/tools"
 script:
+  - cd csharp
   - dotnet cake --target=compile

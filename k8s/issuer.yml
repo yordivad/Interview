@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: m-issuer
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: admin@mcode.ninja
+    privateKeySecretRef:
+      name: m-issuer
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
