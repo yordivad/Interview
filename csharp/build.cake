@@ -7,8 +7,7 @@ var solution = Argument("solution", "Epic.Interview.sln");
 var artifacts = Argument("artifacts", "./.artifacts");
 var sonarkey = EnvironmentVariable("SONARKEY") ?? "";
 var ApiKey = EnvironmentVariable("APIKEY") ?? "";
-
-var branch = EnvironmentVariable("CIRCLE_BRANCH") ?? "develop";
+var branch = EnvironmentVariable("CIRCLE_BRANCH") ?? "master";
 var version = "0.0.1";
 
 
@@ -101,7 +100,16 @@ Task("push").Does(() => {
 
 
 Task("restore").Does(()=> { 
-    DotNetCoreRestore(solution); 
+     var settings = new DotNetCoreRestoreSettings
+     {
+         Sources = new[] {"https://api.nuget.org/v3/index.json", "https://api.bintray.com/nuget/roygi/mlibrary"},
+         PackagesDirectory = "./packages",
+         Verbosity = DotNetCoreVerbosity.Quiet,
+         Force = true,
+         DisableParallel = false,
+     };
+     
+    DotNetCoreRestore(solution, settings); 
 });
 
 Task("clean").Does(() =>{

@@ -17,6 +17,7 @@
 
     <ItemGroup>
       <PackageReference Include="Orleankka" Version="2.3.4" />
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     </ItemGroup>
 
     <ItemGroup>
