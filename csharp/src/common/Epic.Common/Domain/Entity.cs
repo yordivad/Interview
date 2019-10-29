@@ -49,7 +49,7 @@ namespace Epic.Common.Domain
         /// <value>
         /// The identifier.
         /// </value>
-        public TK Id { get; }
+        public TK Id { get; protected set; }
 
         /// <summary>
         /// Implements the == operator.

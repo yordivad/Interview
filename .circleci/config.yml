@@ -43,7 +43,6 @@ jobs:
             sed -i "s|{{token}}|$TOKEN|g"             config
             sed -i "s|{{server}}|$SERVER|g"           config
             sed -i "s|{{user}}|$USER|g"               config
-            cat config
             kubectl config use-context $CLUSTER
       - run:
           name: skaffold deploy

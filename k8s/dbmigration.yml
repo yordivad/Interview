@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: db-migration
 spec:
-  schedule: "* 0 */2 * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
