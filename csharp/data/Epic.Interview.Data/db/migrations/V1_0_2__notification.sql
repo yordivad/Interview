@@ -1,4 +1,6 @@
-	
+
+DROP SCHEMA IF EXISTS  social CASCADE;
+
 CREATE SCHEMA social;
 
 CREATE SEQUENCE social.seq_config AS BIGINT;

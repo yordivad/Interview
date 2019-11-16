@@ -29,7 +29,7 @@ namespace Epic.Interview.Data
     /// <summary>
     ///  The extension class to add the migrations of the Database automatically.
     /// </summary>
-    public class Migration : IHostedService
+    public class Migration : BackgroundService
     {
         private readonly IConfiguration configuration;
         private readonly ILogger logger;
@@ -48,63 +48,48 @@ namespace Epic.Interview.Data
             this.environment = environment;
         }
 
-        /// <summary>
-        /// The start asynchronous process.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token</param>
-        /// <returns>The task</returns>
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            this.TryToMigrate();
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// The stop asynchronous process.
-        /// </summary>
-        /// <param name="cancellationToken">the cancellation token.</param>
-        /// <returns>The task.</returns>
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return  Task.CompletedTask;
-        }
-        
-        /// <summary>
-        /// Adds the migration.
-        /// </summary>
-        public void TryToMigrate()
-        {
-            var path = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-            if (path == null)
+            try
             {
-                throw new ArgumentNullException(nameof(path));
+                var path = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+                if (path == null)
+                {
+                    throw new ArgumentNullException(nameof(path));
+                }
+                Migrate(path);
+                return Task.CompletedTask;
             }
-
-            Migrate(path);
+            catch (Exception e)
+            {
+                this.logger.LogError($"Migration Error: {e.Message} {e.StackTrace} {e.Source}");
+                return Task.FromException(e);
+            }
         }
+
+   
+
 
         private void Migrate(string path)
         {
-            using (var connection = new NpgsqlConnection(configuration.GetConnectionString("default")))
+            using var connection = new NpgsqlConnection(configuration.GetConnectionString("default"));
+            var evolve = new Evolve.Evolve(connection, msg => logger.LogInformation(msg))
             {
-                var evolve = new Evolve.Evolve(connection, msg => logger.LogInformation(msg))
+                Locations = new[]
                 {
-                    Locations = new[]
-                    {
-                        Path.Combine(path, "db/migrations"),
-                        Path.Combine(path, "db/datasets")
-                    },
+                    Path.Combine(path, "db/migrations"),
+                    Path.Combine(path, "db/datasets")
+                },
                     
-                   IsEraseDisabled = this.environment.IsProduction()
-                };
+                IsEraseDisabled = this.environment.IsProduction()
+            };
 
-                if (this.environment.IsDevelopment())
-                {
-                    evolve.Erase();    
-                }
-                
-                evolve.Migrate();
+            if (this.environment.IsDevelopment())
+            {
+                evolve.Erase();    
             }
+                
+            evolve.Migrate();
         }
     }
 }

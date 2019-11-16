@@ -57,6 +57,7 @@ TSL
 
 ```kubernetes helm
 
+
 kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
 helm install --name cert-manager --namespace kube-system jetstack/cert-manager --version v0.11.0
 
@@ -79,6 +80,19 @@ kubectl get certificates
 kubectl describe secrets m-cert
 kubectl describe issuer
 kubectl describe certificate 
-
 kubectl delete secret m-cert
+```
+
+```kubernetes helm
+
+skaffold run -f skaffold.helm.yaml && \
+skaffold dev -f skaffold.k8s.yaml  --port-forward --cache-artifacts=true
+
+```
+
+```kubernetes
+
+kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+kubectl apply -f https://download.elastic.co/downloads/eck/1.0.0-beta1/all-in-one.yaml
+
 ```

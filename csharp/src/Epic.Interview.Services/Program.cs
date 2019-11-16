@@ -13,6 +13,11 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Serilog;
+using Serilog.Formatting.Compact;
+using Serilog.Formatting.Elasticsearch;
+using Serilog.Sinks.Elasticsearch;
+
 namespace Epic.Interview.Services
 {
     using System;
@@ -33,20 +38,35 @@ namespace Epic.Interview.Services
         /// <returns>The IWebHostBuilder.</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).ConfigureAppConfiguration(
-                (context, config) =>
+            return WebHost.CreateDefaultBuilder(args)
+
+                .ConfigureAppConfiguration((context, config) =>
+                {
+                    config.SetBasePath(Environment.CurrentDirectory);
+                    config.AddJsonFile("appsettings.json", optional: false);
+                    config.AddJsonFile(
+                        $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
+                        optional: true);
+                    config.AddEnvironmentVariables();
+                    if (context.HostingEnvironment.IsDevelopment())
                     {
-                        config.SetBasePath(Environment.CurrentDirectory);
-                        config.AddJsonFile("appsettings.json", optional: false);
-                        config.AddJsonFile(
-                            $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
-                            optional: true);
-                        config.AddEnvironmentVariables();
-                        if (context.HostingEnvironment.IsDevelopment())
-                        {
-                            config.AddUserSecrets<Startup>();
-                        }
-                    }).UseStartup<Startup>();
+                        config.AddUserSecrets<Startup>();
+                    }
+                })
+                .UseSerilog((context, config) =>
+                {
+                    var configuration = context.Configuration;
+                    config.MinimumLevel.Information()
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console(new CompactJsonFormatter())
+                        .WriteTo.Elasticsearch(
+                            new ElasticsearchSinkOptions(new Uri(configuration.GetValue<string>("ELASTIC:URL")))
+                            {
+                                ModifyConnectionSettings = x => x.BasicAuthentication(
+                                    configuration.GetValue<string>("ELASTIC:USER"),
+                                    configuration.GetValue<string>("ELASTIC:PASSWORD")),
+                            });
+                }).UseStartup<Startup>();
         }
 
         /// <summary>

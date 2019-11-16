@@ -114,6 +114,7 @@ Task("restore").Does(()=> {
 
 Task("clean").Does(() =>{
     CleanDirectories("./.artifacts");
+    CleanDirectories("./.migration");
     CleanDirectories(string.Format("./**/obj/{0}", configuration));
     CleanDirectories(string.Format("./**/bin/{0}", configuration));
 });
@@ -127,6 +128,18 @@ Task("build").Does(()=> {
     DotNetCoreBuild(solution, setting);
 });
 
+Task("migrate").Does(()=> {
+    
+     var settings = new DotNetCorePublishSettings
+         {
+             Configuration = "Release",
+             OutputDirectory = "./.migration/"
+         };
+         
+    DotNetCorePublish("./data/MCode.Interview.Data.App", settings);
+    DotNetCoreExecute("./.migration/MCode.Interview.Data.App.dll");
+
+});
 
     
 Task("default")
@@ -138,7 +151,8 @@ Task("default")
         .IsDependentOn("test")
         .IsDependentOn("analysis-end")
         .IsDependentOn("pack")
-        .IsDependentOn("push");
+        .IsDependentOn("push")
+        .IsDependentOn("migrate");
         
 Task("compile")
         .IsDependentOn("clean")

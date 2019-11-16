@@ -377,3 +377,5 @@ tools/
 ui/web/dist/
 
 .tools/
+
+csharp/.migration/

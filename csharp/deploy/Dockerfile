@@ -6,7 +6,7 @@ COPY *.sln .
 COPY  stylecop.json .
 COPY  src ./src
 COPY  test ./test/
-
+COPY  data ./data/
 
 # Restoring the packages
 RUN dotnet restore

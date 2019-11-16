@@ -1,0 +1,15 @@
+apiVersion: skaffold/v1beta16
+kind: Config
+metadata:
+  name: interview
+deploy:
+  helm:
+    releases:
+      - name: mingress
+        chartPath: stable/nginx-ingress
+        remote: true
+      - name: cert-manager
+        namespace: kube-system
+        chartPath: jetstack/cert-manager
+        version: v0.11.0
+        remote: true

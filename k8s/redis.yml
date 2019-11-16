@@ -1,16 +1,15 @@
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Service
 metadata:
-  name: redis-pvc
-  labels:
-    app: redis
+  name: redis
 spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,20 +22,13 @@ spec:
   replicas: 1
   template:
     metadata:
+      name: redis-pod
       labels:
         app: redis
     spec:
       containers:
         - name: master
-          image: redis:5-alpine
-          imagePullPolicy: Always
-          resources:
-            requests:
-              cpu: 10m
-              memory: 64Mi
-            limits:
-              cpu: 500m
-              memory: 256Mi
+          image: redis
           ports:
             - containerPort: 6379
           volumeMounts:
@@ -45,17 +37,18 @@ spec:
       volumes:
         - name: redis-data
           persistentVolumeClaim:
-            claimName: redis-pvc
+            claimName: redis-storage
 ---
+
 apiVersion: v1
-kind: Service
+kind: PersistentVolumeClaim
 metadata:
-  name: redis
+  name: redis-storage
   labels:
     app: redis
 spec:
-  type: NodePort
-  ports:
-    - port: 6379
-  selector:
-    app: redis
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

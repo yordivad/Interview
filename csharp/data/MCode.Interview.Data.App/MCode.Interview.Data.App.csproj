@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="..\stylecop.json">
+      <AdditionalFiles Include="..\..\stylecop.json">
         <Link>stylecop.json</Link>
       </AdditionalFiles>
     </ItemGroup>
@@ -21,11 +21,14 @@
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
+        <PackageReference Include="Serilog.AspNetCore" Version="3.1.0" />
+        <PackageReference Include="Serilog.Sinks.ElasticSearch" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>

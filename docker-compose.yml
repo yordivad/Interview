@@ -12,15 +12,25 @@ services:
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__default=Database=postgres;Username=postgres;Password=123;Host=db
       - AppSettings__secret=development-secret
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:2525
+        tag: services
     networks:
       - net
-  
+
   web:
     build:
       context: ./ui/web
       dockerfile: ./deploy/Dockerfile
     ports:
       - 80:80
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:2525
+        tag: web
     networks:
       - net
         
@@ -33,6 +43,11 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:2525
+        tag: db
     networks:
       - net
         
@@ -43,6 +58,38 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@mcode.net"
       PGADMIN_DEFAULT_PASSWORD: "123"
+    networks:
+      - net
+
+  fluentd:
+    build: ./fluentd
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+    ports:
+      - "2525:2525"
+      - "2525:2525/udp"
+    networks:
+      - net
+
+  kibana:
+    image: kibana:7.4.0
+    ports:
+      - 5601:5601
+    volumes:
+      - ./ekf/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - net
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    environment:
+      - "ELASTIC_PASSWORD=password"
+    expose:
+      - 9200
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./ekf/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
     networks:
       - net
 

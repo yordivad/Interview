@@ -48,7 +48,7 @@ jobs:
           name: skaffold deploy
           command: |
             cd /app
-            skaffold run
+            skaffold run -f skaffold.k8s.yaml
 
 workflows:
   version: 2
