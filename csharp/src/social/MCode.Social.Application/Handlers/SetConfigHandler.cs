@@ -13,6 +13,10 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+/*
+
+using MCode.Social.Abstraction;
+
 namespace MCode.Social.Application.Handlers
 {
     using MCode.Social.Abstraction.Commands.Request;
@@ -50,9 +54,11 @@ namespace MCode.Social.Application.Handlers
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns>The unit.</returns>
-        protected override IMono<Unit> Handle(SetConfig request)
+        protected override IMono<Unit> Handle(ConfigRequest request)
         {
             return this.repository.Save(Config.Create(request.Server)).Map(_ => Unit.Value);
         }
     }
 }
+
+*/

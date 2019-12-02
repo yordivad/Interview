@@ -1,8 +1,0 @@
-version: "1.0"
-
-steps:
-  main_clone:
-    stage: "clone"
-    type: "git-clone"
-    repo: "RoyGI/Interview"
-    revision: "${{CF_BRANCH}}"

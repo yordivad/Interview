@@ -1,50 +1,42 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Program.cs" company="MCode">
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see https://www.gnu.org/licenses/.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Threading.Tasks;
+using MCode.Social.Application;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Proto;
 
 namespace MCode.Social.Server
 {
-    using System;
-
-    using MCode.Social.Application;
-    using MCode.Social.Infrastructure;
-
-    using Orleans.Hosting;
-
-    /// <summary>
-    /// the program class.
-    /// </summary>
     public class Program
     {
-        /// <summary>
-        /// Defines the entry point of the application.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            var builder = new SiloHostBuilder();
+            var builder = new HostBuilder()
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", optional: true);
+                    config.AddEnvironmentVariables();
 
-            builder.ConfigureApplicationParts(manager => { manager.AddApp(); });
-
-            builder.ConfigureServices(
-                services =>
+                    if (args != null)
                     {
-                        services.AddSocialApp();
-                        services.AddSocialInfrastructure();
-                    });
+                        config.AddCommandLine(args);
+                    }
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddSingleton<IHostedService, ClusterService>();
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                });
 
-            Console.WriteLine("Hello World!");
+            var host = builder.Build();
+            await host.RunAsync();
+
         }
     }
 }

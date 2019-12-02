@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "MCode.Social.Abstraction";
+
+package Social;
+
+message ConfigRequest {
+    string Server = 1;
+}
+
+message ConfigResponse {
+    string Message = 1;
+}
+
+service Config  {
+    rpc Save(ConfigRequest) returns(ConfigResponse) {
+    }
+}
+

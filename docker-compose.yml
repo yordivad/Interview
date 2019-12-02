@@ -1,13 +1,14 @@
 version: '3'
 services:
 
-  dev:
+  api:
     build:
       context: ./csharp
-      dockerfile: ./deploy/Dockerfile
+      dockerfile: ./deploy/api/Dockerfile
     ports:
       - 8080:8080
     environment:
+      - ELASTIC__URL=http://elasticsearch:9200
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__default=Database=postgres;Username=postgres;Password=123;Host=db
@@ -25,7 +26,7 @@ services:
       context: ./ui/web
       dockerfile: ./deploy/Dockerfile
     ports:
-      - 80:80
+      - 90:80
     logging:
       driver: "fluentd"
       options:
@@ -93,6 +94,24 @@ services:
     networks:
       - net
 
+  consul:
+    image: bitnami/consul:1
+    volumes:
+      - consul_data:/bitnami/consul
+    ports:
+      - '8300:8300'
+      - '8301:8301'
+      - '8301:8301/udp'
+      - '8500:8500'
+      - '8600:8600'
+      - '8600:8600/udp'
+  
+      
+      
 networks:
   net:
     driver: bridge
+
+volumes:
+  consul_data:
+    driver: local

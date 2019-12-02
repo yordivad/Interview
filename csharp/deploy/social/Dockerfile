@@ -12,7 +12,7 @@ COPY  data ./data/
 RUN dotnet restore
 
 # Building 
-WORKDIR /app/src/Epic.Interview.Services
+WORKDIR /app/src/social/MCode.Social.Server
 RUN dotnet publish -c Release -o dist
 
 FROM mcr.microsoft.com/dotnet/core/runtime:2.2 AS runtime

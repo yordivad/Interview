@@ -43,7 +43,7 @@ namespace Epic.Interview.Services
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     config.SetBasePath(Environment.CurrentDirectory);
-                    config.AddJsonFile("appsettings.json", optional: false);
+                    config.AddJsonFile("appsettings.json", optional: true);
                     config.AddJsonFile(
                         $"appsettings.{context.HostingEnvironment.EnvironmentName}.json",
                         optional: true);
@@ -55,17 +55,25 @@ namespace Epic.Interview.Services
                 })
                 .UseSerilog((context, config) =>
                 {
-                    var configuration = context.Configuration;
-                    config.MinimumLevel.Information()
-                        .Enrich.FromLogContext()
-                        .WriteTo.Console(new CompactJsonFormatter())
-                        .WriteTo.Elasticsearch(
-                            new ElasticsearchSinkOptions(new Uri(configuration.GetValue<string>("ELASTIC:URL")))
-                            {
-                                ModifyConnectionSettings = x => x.BasicAuthentication(
-                                    configuration.GetValue<string>("ELASTIC:USER"),
-                                    configuration.GetValue<string>("ELASTIC:PASSWORD")),
-                            });
+                    try
+                    {
+                        var configuration = context.Configuration;
+                        config.MinimumLevel.Information()
+                            .Enrich.FromLogContext()
+                            .WriteTo.Console(new CompactJsonFormatter())
+                            .WriteTo.Elasticsearch(
+                                new ElasticsearchSinkOptions(new Uri(configuration.GetValue<string>("ELASTIC:URL")))
+                                {
+                                    ModifyConnectionSettings = x => x.BasicAuthentication(
+                                        configuration.GetValue<string>("ELASTIC:USER"),
+                                        configuration.GetValue<string>("ELASTIC:PASSWORD")),
+                                });
+                    }
+                    catch (Exception e)
+                    {
+                        var configuration = context.Configuration;
+                        throw new Exception(configuration.GetValue<string>("ELASTIC:URL"), e);
+                    }
                 }).UseStartup<Startup>();
         }
 

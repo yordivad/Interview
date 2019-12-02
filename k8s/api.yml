@@ -51,3 +51,18 @@ spec:
                 secretKeyRef:
                   key: secret
                   name: m-secret
+            - name: ELASTIC__URL
+              valueFrom:
+                secretKeyRef:
+                  key: elastic_url
+                  name: m-secret
+            - name: ELASTIC__USER
+              valueFrom:
+                  secretKeyRef:
+                      key: elastic_user
+                      name: m-secret
+            - name: ELASTIC__PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                      key: elastic_password
+                      name: m-secret

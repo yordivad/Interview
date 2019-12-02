@@ -1,5 +1,5 @@
 {
     "ConnectionStrings": {
-        "default": "host=roy-pc; database=mdata; username=postgres; password=123;"
+        "default": "host=localhost; database=mdata; username=postgres; password=123;"
     }
 }

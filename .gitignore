@@ -379,3 +379,10 @@ ui/web/dist/
 .tools/
 
 csharp/.migration/
+
+k8s/secret.yml
+skaffold
+kubectl
+codecov
+get_helm.sh
+.skaffold/

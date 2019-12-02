@@ -23,7 +23,8 @@
     <ItemGroup>
       <PackageReference Include="MediatR" Version="7.0.0" />
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-      <PackageReference Include="Orleankka.Runtime" Version="2.3.4" />
+      <PackageReference Include="Proto.Actor" Version="0.2.0" />
+      <PackageReference Include="Proto.Actor.Extensions" Version="0.2.0" />
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" />
     </ItemGroup>
 

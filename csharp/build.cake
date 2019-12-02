@@ -5,11 +5,10 @@ var target = Argument("target", "default");
 var configuration = Argument("configuration", "Release");
 var solution = Argument("solution", "Epic.Interview.sln");
 var artifacts = Argument("artifacts", "./.artifacts");
-var sonarkey = EnvironmentVariable("SONARKEY") ?? "";
-var ApiKey = EnvironmentVariable("APIKEY") ?? "";
-var branch = EnvironmentVariable("CIRCLE_BRANCH") ?? "master";
-var version = "0.0.1";
-
+var sonarKey = EnvironmentVariable("SONARKEY") ?? "";
+var apiKey = EnvironmentVariable("APIKEY") ?? "";
+var branch = EnvironmentVariable("BRANCH") ?? "master";
+var version = EnvironmentVariable("VERSION") ?? "0.0.1";
 
 
 Task("analysis-begin").Does(()=> {
@@ -25,7 +24,7 @@ Task("analysis-begin").Does(()=> {
                         .Append("/d:sonar.branch.name={0}", branch)
                         .Append("/d:sonar.links.ci=https://circleci.com/gh/RoyGI")
                         .Append("/d:sonar.host.url=https://sonarcloud.io")
-                        .Append("/d:sonar.login={0}",sonarkey)
+                        .Append("/d:sonar.login={0}",sonarKey)
                         .Append("/o:roygi")
     };
     
@@ -36,7 +35,7 @@ Task("analysis-end").Does(()=> {
    var setting = new DotNetCoreToolSettings {
         ArgumentCustomization = 
            args => args.Append("end")
-                       .Append("/d:sonar.login={0}",sonarkey)
+                       .Append("/d:sonar.login={0}",sonarKey)
     };
     
     DotNetCoreTool("sonarscanner", setting);
@@ -55,22 +54,6 @@ Task("test").Does(() => {
     };
     
     DotNetCoreTest(solution, setting);    
-});
-
-Task("version").Does(() => {
-    
-    try {
-        using(var process = StartAndReturnProcess("nbgv",  
-            new ProcessSettings{ Arguments = "get-version -v NuGetPackageVersion", RedirectStandardOutput = true }))
-        {
-           version = process.GetStandardOutput().First();
-        }
-    }
-    catch(Exception e) {
-        Information("version error {0}", e.Message);
-    }
-  
-    Information(version);
 });
 
 Task("pack").Does(() => {
@@ -92,7 +75,7 @@ Task("push").Does(() => {
    var settings = new DotNetCoreNuGetPushSettings
        {
            Source = "https://api.bintray.com/nuget/roygi/mlibrary",
-           ApiKey = $"roygi:{ApiKey}"
+           ApiKey = $"roygi:{apiKey}"
        };
        
     DotNetCoreNuGetPush( "./.artifacts/*.nupkg", settings);
@@ -128,7 +111,22 @@ Task("build").Does(()=> {
     DotNetCoreBuild(solution, setting);
 });
 
-Task("migrate").Does(()=> {
+
+Task("version").Does(() => {
+
+        var settings = new ProcessSettings {
+            Arguments = "gitversion /showvariable NuGetVersion",
+            RedirectStandardOutput = true
+        };
+
+        using(var process = StartAndReturnProcess("dotnet",settings)) {
+            version = process.GetStandardOutput().First();
+        };
+
+});
+
+
+Task("migrate_default").Does(()=> {
     
      var settings = new DotNetCorePublishSettings
          {
@@ -149,20 +147,20 @@ Task("default")
         .IsDependentOn("analysis-begin")
         .IsDependentOn("build")
         .IsDependentOn("test")
-        .IsDependentOn("analysis-end")
-        .IsDependentOn("pack")
-        .IsDependentOn("push")
-        .IsDependentOn("migrate");
-        
-Task("compile")
-        .IsDependentOn("clean")
-        .IsDependentOn("restore")
-        .IsDependentOn("build");
-        
-Task("verify")
+        .IsDependentOn("analysis-end");
+
+Task("check")
         .IsDependentOn("clean")
         .IsDependentOn("restore")
         .IsDependentOn("build")
         .IsDependentOn("test");
-             
+
+Task("deploy")
+        .IsDependentOn("version")
+        .IsDependentOn("pack")
+        .IsDependentOn("push");
+
+Task("migrate")
+        .IsDependentOn("migrate_default");
+
 RunTarget(target);

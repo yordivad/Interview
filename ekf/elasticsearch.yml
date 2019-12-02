@@ -1,4 +1,4 @@
 cluster.name: elasticsearch-cluster
 network.host: 0.0.0.0
 discovery.type: single-node
-xpack.security.enabled: true
+#xpack.security.enabled: true

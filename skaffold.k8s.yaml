@@ -4,18 +4,22 @@ metadata:
   name: interview
 build:
   artifacts:
+
   - image: roygi-docker-mdocker.bintray.io/docs
     context: docs
     docker:
       dockerfile: deploy/Dockerfile
+
   - image: roygi-docker-mdocker.bintray.io/api
     context: csharp
     docker:
-      dockerfile: deploy/Dockerfile
+      dockerfile: deploy/api/Dockerfile
+
   - image: roygi-docker-mdocker.bintray.io/web
     context: ui/web
     docker:
       dockerfile: deploy/Dockerfile
+
 deploy:
   kubectl:
     manifests:
@@ -25,7 +29,6 @@ deploy:
      - k8s/web.yml
      - k8s/docs.yml
      - k8s/secret.yml
-     - k8s/redis.yml
     
     
     
