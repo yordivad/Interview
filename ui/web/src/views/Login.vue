@@ -94,7 +94,6 @@
         background-position: center center
     }
 
-
     .login {
 
         height: 500px;
