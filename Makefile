@@ -1,10 +1,10 @@
 # Makefile
 
-DBC="$(shell printenv ConnectionStrings__default | base64 -w 0)"
-KEY="$(shell printenv AppSettings__secret | base64 -w 0)"
-ELURL="$(shell printenv ELASTIC__URL | base64 -w 0)"
-ELUSR="$(shell printenv ELASTIC__USER | base64 -w 0)"
-ELPWD="$(shell printenv ELASTIC__PASSWORD | base64 -w 0)"
+DBC="$(shell printenv ConnectionStrings__default | tr -d \\n | base64 -w 0 )"
+KEY="$(shell printenv AppSettings__secret | tr -d \\n | base64 -w 0)"
+ELURL="$(shell printenv ELASTIC__URL | tr -d \\n | base64 -w 0)"
+ELUSR="$(shell printenv ELASTIC__USER |  tr -d \\n | base64 -w 0)"
+ELPWD="$(shell printenv ELASTIC__PASSWORD |  tr -d \\n | base64 -w 0)"
 VERSION="$(shell dotnet gitversion /showvariable NuGetVersion)"
 
 .PHONY: clean build test coverage migrate deploy
