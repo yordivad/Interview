@@ -370,19 +370,22 @@ yarn-error.log*
 *.njsproj
 *.sw?
 
+# Files by reason
+*.bs.js
+
+# Folders created by Cake
 tools/
-
 .sonarqube/
-
 ui/web/dist/
-
 .tools/
-
-csharp/.migration/
-
+.skaffold/
+csharp/.migration
 k8s/secret.yml
 skaffold
 kubectl
 codecov
 get_helm.sh
-.skaffold/
+
+
+
+ui/mobile/lib/
