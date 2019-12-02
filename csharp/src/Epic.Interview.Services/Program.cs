@@ -39,7 +39,6 @@ namespace Epic.Interview.Services
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             return WebHost.CreateDefaultBuilder(args)
-
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     config.SetBasePath(Environment.CurrentDirectory);

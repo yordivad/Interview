@@ -34,7 +34,7 @@ services:
         tag: web
     networks:
       - net
-        
+
   db:
     image: postgres
     restart: always
@@ -51,7 +51,7 @@ services:
         tag: db
     networks:
       - net
-        
+
   pgadmin:
     image: dpage/pgadmin4
     ports:
@@ -105,9 +105,7 @@ services:
       - '8500:8500'
       - '8600:8600'
       - '8600:8600/udp'
-  
-      
-      
+
 networks:
   net:
     driver: bridge

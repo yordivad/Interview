@@ -29,6 +29,3 @@ deploy:
      - k8s/web.yml
      - k8s/docs.yml
      - k8s/secret.yml
-    
-    
-    
