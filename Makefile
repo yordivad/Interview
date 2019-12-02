@@ -17,6 +17,16 @@ else
 	@dotnet cake ./csharp/build.cake --target=check
 endif
 
+# Building web
+	yarn --cwd ui/web install
+	yarn --cwd ui/web build
+	yarn --cwd ui/web lint
+
+# Building mobile
+	yarn --cwd ui/mobile install
+	yarn --cwd ui/mobile build
+	yarn --cwd ui/mobile test
+
 test:
 	@dotnet cake ./csharp/build.cake --target=test
 

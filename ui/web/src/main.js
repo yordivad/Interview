@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
-import VeeValidate from 'vee-validate'
+import VeeValidate  from 'vee-validate'
 import 'vue-material/dist/vue-material.min.css'
 import './theme/epic.theme.scss'
 
@@ -12,8 +12,6 @@ import App from './App.vue'
 
 
 Vue.config.productionTip = false;
-
-
 
 Vue.use(VueMaterial);
 Vue.use(VeeValidate);
