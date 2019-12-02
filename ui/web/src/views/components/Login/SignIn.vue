@@ -1,5 +1,5 @@
 <template lang="pug">
-    
+
     .sign-in
         .md-layout(class="title md-alignment-top-center")
             span(class = "md-title") Sign In

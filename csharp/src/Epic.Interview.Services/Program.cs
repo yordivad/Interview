@@ -13,18 +13,15 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using Serilog;
-using Serilog.Formatting.Compact;
-using Serilog.Formatting.Elasticsearch;
-using Serilog.Sinks.Elasticsearch;
-
 namespace Epic.Interview.Services
 {
     using System;
-
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    using Serilog;
+    using Serilog.Formatting.Compact;
+    using Serilog.Sinks.Elasticsearch;
 
     /// <summary>
     /// Class Program.

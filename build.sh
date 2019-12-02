@@ -31,6 +31,25 @@ if [ ! -f "codecov" ]; then
     chmod +x codecov
 fi
 
+# Installing web dependencies
+
+sudo apt-get install -y gcc g++ make
+
+#installing node
+curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+sudo apt update && sudo apt install -y nodejs
+
+
+#installing yarn
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update && sudo apt install -y yarn
+
+
+# installing react native.
+sudo npm install -g react-native-cli
+
+
 # Installing dotnet tools
 dotnet tool install -g Cake.Tool || echo "dotnet cake is installed"
 dotnet tool install -g GitVersion.Tool || echo "dotnet git version is installed"

@@ -3,8 +3,16 @@ dist: bionic
 language: csharp
 mono: none
 dotnet: 2.2
+android:
+    components:
+        - tools
+        - platform-tools
+        - build-tools-28.0.3
+        - tools
 git:
-  depth: false
+    depth: false
+
+env: LANE='android'
 
 before_install:
   - chmod +x build.sh
