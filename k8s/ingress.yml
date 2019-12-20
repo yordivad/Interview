@@ -11,7 +11,7 @@ spec:
         - web.mlambda.net
         - api.mlambda.net
         - docs.mlambda.net
-      secretName: m-cert
+      secretName: interview-cert
   rules:
     - host: web.mlambda.net
       http:
