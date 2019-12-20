@@ -8,26 +8,26 @@ metadata:
 spec:
   tls:
     - hosts:
-        - web.mcode.ninja
-        - api.mcode.ninja
-        - docs.mcode.ninja
+        - web.mlambda.net
+        - api.mlambda.net
+        - docs.mlambda.net
       secretName: m-cert
   rules:
-    - host: web.mcode.ninja
+    - host: web.mlambda.net
       http:
         paths:
           - path: /
             backend:
               serviceName: web-svc
               servicePort: 80
-    - host: api.mcode.ninja
+    - host: api.mlambda.net
       http:
         paths:
           - path: /
             backend:
               serviceName: api-svc
               servicePort: 80
-    - host: docs.mcode.ninja
+    - host: docs.mlambda.net
       http:
         paths:
           - path: /
